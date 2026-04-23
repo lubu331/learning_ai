@@ -1,0 +1,58 @@
+{
+  "questions": [
+    {
+      "question_code": "G2-SOC-0001",
+      "question_tag": "grade2.sociales.colombia.capitales",
+      "grade_level": "2",
+      "subject": "Sociales",
+      "topic": "Colombia",
+      "question_type": "free_text",
+      "prompt_text": "¿Cuál es la capital de Colombia?",
+      "accepted_answers": ["Bogotá", "bogota"],
+      "explanation": "La capital de Colombia es Bogotá."
+    },
+    {
+      "question_code": "G2-SOC-0002",
+      "question_tag": "grade2.sociales.atlantico.barranquilla",
+      "grade_level": "2",
+      "subject": "Sociales",
+      "topic": "Atlántico",
+      "question_type": "free_text",
+      "prompt_text": "¿Cuál es la capital del Atlántico?",
+      "accepted_answers": ["Barranquilla", "barranquilla"],
+      "explanation": "La capital del Atlántico es Barranquilla."
+    },
+    {
+      "question_code": "G2-SOC-0003",
+      "question_tag": "grade2.sociales.colombia.bandera",
+      "grade_level": "2",
+      "subject": "Sociales",
+      "topic": "Símbolos de Colombia",
+      "question_type": "multiple_choice",
+      "prompt_text": "¿Qué colores tiene la bandera de Colombia?",
+      "choices": [
+        {"label": "A", "text": "Verde, blanco y rojo", "is_correct": false},
+        {"label": "B", "text": "Amarillo, azul y rojo", "is_correct": true},
+        {"label": "C", "text": "Azul y blanco", "is_correct": false},
+        {"label": "D", "text": "Rojo y negro", "is_correct": false}
+      ],
+      "explanation": "La bandera de Colombia tiene amarillo, azul y rojo."
+    },
+    {
+      "question_code": "G2-SOC-0004",
+      "question_tag": "grade2.sociales.comunidad.escuela",
+      "grade_level": "2",
+      "subject": "Sociales",
+      "topic": "Comunidad",
+      "question_type": "multiple_choice",
+      "prompt_text": "¿Cuál lugar es para estudiar y aprender?",
+      "choices": [
+        {"label": "A", "text": "La escuela", "is_correct": true},
+        {"label": "B", "text": "El estadio", "is_correct": false},
+        {"label": "C", "text": "La playa", "is_correct": false},
+        {"label": "D", "text": "El supermercado", "is_correct": false}
+      ],
+      "explanation": "La escuela es el lugar para estudiar y aprender."
+    }
+  ]
+}

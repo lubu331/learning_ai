@@ -1,0 +1,58 @@
+{
+  "questions": [
+    {
+      "question_code": "G2-MATH-0001",
+      "question_tag": "grade2.math.addition",
+      "grade_level": "2",
+      "subject": "Matemáticas",
+      "topic": "Sumas básicas",
+      "question_type": "free_text",
+      "prompt_text": "¿Cuánto es 4 + 3?",
+      "accepted_answers": ["7", "siete"],
+      "explanation": "4 + 3 es igual a 7."
+    },
+    {
+      "question_code": "G2-MATH-0002",
+      "question_tag": "grade2.math.subtraction",
+      "grade_level": "2",
+      "subject": "Matemáticas",
+      "topic": "Restas básicas",
+      "question_type": "free_text",
+      "prompt_text": "¿Cuánto es 9 - 5?",
+      "accepted_answers": ["4", "cuatro"],
+      "explanation": "9 menos 5 es igual a 4."
+    },
+    {
+      "question_code": "G2-MATH-0003",
+      "question_tag": "grade2.math.shapes",
+      "grade_level": "2",
+      "subject": "Matemáticas",
+      "topic": "Figuras",
+      "question_type": "multiple_choice",
+      "prompt_text": "¿Cuál figura tiene 3 lados?",
+      "choices": [
+        {"label": "A", "text": "Cuadrado", "is_correct": false},
+        {"label": "B", "text": "Triángulo", "is_correct": true},
+        {"label": "C", "text": "Círculo", "is_correct": false},
+        {"label": "D", "text": "Rectángulo", "is_correct": false}
+      ],
+      "explanation": "El triángulo tiene 3 lados."
+    },
+    {
+      "question_code": "G2-MATH-0004",
+      "question_tag": "grade2.math.comparison",
+      "grade_level": "2",
+      "subject": "Matemáticas",
+      "topic": "Comparación",
+      "question_type": "multiple_choice",
+      "prompt_text": "¿Cuál número es mayor?",
+      "choices": [
+        {"label": "A", "text": "12", "is_correct": false},
+        {"label": "B", "text": "9", "is_correct": false},
+        {"label": "C", "text": "15", "is_correct": true},
+        {"label": "D", "text": "7", "is_correct": false}
+      ],
+      "explanation": "15 es el número mayor."
+    }
+  ]
+}

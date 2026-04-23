@@ -1,0 +1,16 @@
+{
+  "id": "col-social-002",
+  "country": "Colombia",
+  "subject": "Sociales",
+  "difficulty": 3,
+  "mode": "multiple_choice",
+  "question": "¿Cuál de las siguientes ciudades es la capital del departamento del Atlántico?",
+  "choices": {
+    "A": "Santa Marta",
+    "B": "Barranquilla",
+    "C": "Cartagena",
+    "D": "Valledupar"
+  },
+  "correct_choice": "B",
+  "explanation": "Barranquilla es la capital del Atlántico. Santa Marta es la capital del Magdalena, Cartagena de Bolívar y Valledupar del Cesar."
+}

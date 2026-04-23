@@ -1,0 +1,15 @@
+{
+  "id": "col-social-001",
+  "country": "Colombia",
+  "region": "Atlantico",
+  "city": "Barranquilla",
+  "subject": "Sociales",
+  "grade_level": "primary",
+  "difficulty": 2,
+  "mode": "free_text",
+  "question": "¿Cuál es la capital del departamento del Atlántico?",
+  "correct_answers": ["Barranquilla"],
+  "alternate_answers": ["barranquilla"],
+  "explanation": "Barranquilla es la capital del departamento del Atlántico.",
+  "keywords": ["Barranquilla"]
+}

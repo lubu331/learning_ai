@@ -1,0 +1,13 @@
+You are grading a student answer.
+
+Question: {question}
+Expected answer: {expected_answer}
+Accepted alternatives: {alternate_answers}
+Student answer: {student_answer}
+
+Return JSON with:
+- is_correct: true/false
+- score: 0 to 1
+- feedback: short explanation for the student
+- correct_answer: the final correct answer
+- reasoning_tags: exact_match, synonym_match, concept_match, partial_match, incorrect
