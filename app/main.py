@@ -12,7 +12,6 @@ from app.generator import load_questions_for_grade_subject, filter_questions, su
 from app.grader import grade_free_text, grade_multiple_choice, store_incorrect_answer
 from app.config import BASE_DIR
 
-
 Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Learning AI Quiz App")

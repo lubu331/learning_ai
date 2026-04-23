@@ -4,80 +4,193 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Learning AI Quiz App</title>
-  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="/static/css/style.css?v=2" />
 </head>
 <body>
-  <div class="container">
-    <h1>Learning AI Quiz App</h1>
-    <p class="subtitle">Practice quizzes for kids and adults</p>
+  <main class="app-shell">
 
-    <div class="card">
-      <h2>Create Quiz</h2>
+    <!-- PAGE 1: SETUP -->
+    <section id="setupPage" class="page setup-page">
+      <header class="hero-card">
+        <div>
+          <div class="brand-pill">Learning AI</div>
+          <h1>Build a quiz for today’s lesson</h1>
+          <p>
+            Choose the grade, topic, question type, and optionally add files
+            your quiz can use later.
+          </p>
+        </div>
 
-      <div class="form-grid">
-        <div class="form-group">
-          <label for="gradeLevel">Grade</label>
+        <div class="hero-art">
+          <div class="circle-icon">📚</div>
+          <div class="mini-card">Smart practice</div>
+          <div class="mini-card orange">Kid friendly</div>
+        </div>
+      </header>
+
+      <section class="setup-grid">
+        <div class="panel">
+          <h2>Quiz setup</h2>
+
+          <label>Student name</label>
+          <input id="studentName" type="text" placeholder="Example: Matti" />
+
+          <label>Grade</label>
           <select id="gradeLevel">
             <option value="2" selected>2nd Grade</option>
           </select>
-        </div>
 
-        <div class="form-group">
-          <label for="subject">Subject</label>
+          <label>Topic</label>
           <select id="subject">
             <option value="math">Math</option>
-            <option value="sociales">Sociales</option>
+            <option value="sociales">Sociales Colombia</option>
           </select>
-        </div>
 
-        <div class="form-group">
-          <label for="questionType">Question Type</label>
+          <label>Question type</label>
           <select id="questionType">
-            <option value="free_text">Free Text</option>
-            <option value="multiple_choice">Multiple Choice</option>
+            <option value="free_text">Free text answer</option>
+            <option value="multiple_choice">ICFES style / 4 choices</option>
+          </select>
+
+          <label>Amount of questions</label>
+          <select id="limit">
+            <option value="3">3 questions</option>
+            <option value="5" selected>5 questions</option>
+            <option value="10">10 questions</option>
           </select>
         </div>
 
-        <div class="form-group">
-          <label for="limit">Number of Questions</label>
-          <input type="number" id="limit" value="3" min="1" max="10" />
+        <div class="panel">
+          <h2>Learning files</h2>
+          <p class="muted">
+            Upload class notes, worksheets, PDFs, or pictures. For now this is
+            only the UI. Later we will connect file reading and AI question generation.
+          </p>
+
+          <label for="fileUpload" class="upload-box">
+            <span class="upload-icon">⬆️</span>
+            <strong>Drop files here or click to browse</strong>
+            <small>Accepted later: TXT, PDF, PNG, JPG</small>
+          </label>
+
+          <input
+            id="fileUpload"
+            type="file"
+            multiple
+            accept=".txt,.pdf,.png,.jpg,.jpeg"
+            hidden
+          />
+
+          <div id="uploadedFiles" class="file-list"></div>
+        </div>
+      </section>
+
+      <div class="action-row">
+        <button id="startQuizBtn" class="btn-primary">Start Quiz</button>
+      </div>
+
+      <p id="statusMessage" class="status-message"></p>
+    </section>
+
+    <!-- PAGE 2: QUIZ -->
+    <section id="quizPage" class="page quiz-page hidden">
+      <header class="quiz-topbar">
+        <div>
+          <div class="brand-small">Learning AI</div>
+          <strong id="quizStudentName">Student</strong>
+        </div>
+
+        <div class="score-chip" id="scoreDisplay">Score: 0</div>
+      </header>
+
+      <div class="progress-wrap">
+        <div class="progress-meta">
+          <span id="questionCounter">Question 1 of 5</span>
+          <span id="questionTag">grade2.topic</span>
+        </div>
+        <div class="progress-bar">
+          <div id="progressFill" class="progress-fill"></div>
         </div>
       </div>
 
-      <button id="loadQuizBtn">Load Quiz</button>
-      <p id="statusMessage" class="status"></p>
-    </div>
+      <article class="question-card">
+        <div id="questionNumber" class="question-badge">Question 1</div>
+        <h2 id="questionText">Question text</h2>
 
-    <div id="quizCard" class="card hidden">
-      <div class="question-header">
-        <h2>Question</h2>
-        <span id="questionCounter"></span>
+        <div id="freeTextArea" class="answer-area hidden">
+          <input
+            id="freeTextInput"
+            type="text"
+            placeholder="Type your answer here"
+          />
+          <button id="submitTextAnswerBtn" class="btn-primary">Submit</button>
+        </div>
+
+        <div id="multipleChoiceArea" class="choice-grid hidden"></div>
+
+        <div id="feedbackBox" class="feedback-box hidden">
+          <strong id="feedbackTitle">Feedback</strong>
+          <p id="feedbackText"></p>
+          <p id="correctAnswerText"></p>
+        </div>
+
+        <button id="nextQuestionBtn" class="btn-secondary hidden">
+          Next Question
+        </button>
+
+        <section class="question-report">
+          <h3>Question feedback</h3>
+          <p>Was this question confusing or wrong?</p>
+
+          <div class="report-options">
+            <label>
+              <input type="radio" name="reportReason" value="confusing" />
+              Confusing
+            </label>
+            <label>
+              <input type="radio" name="reportReason" value="wrong_answer" />
+              Wrong answer
+            </label>
+            <label>
+              <input type="radio" name="reportReason" value="typo" />
+              Typo
+            </label>
+            <label>
+              <input type="radio" name="reportReason" value="bad_choices" />
+              Bad choices
+            </label>
+          </div>
+
+          <textarea
+            id="questionReportNote"
+            placeholder="Optional note for parent review"
+          ></textarea>
+
+          <button id="sendQuestionReportBtn" class="btn-report">
+            Send feedback
+          </button>
+
+          <p id="reportStatus" class="report-status"></p>
+        </section>
+      </article>
+    </section>
+
+    <!-- RESULTS -->
+    <section id="resultsPage" class="page results-page hidden">
+      <div class="results-card">
+        <div class="result-icon">⭐</div>
+        <h2>Quiz finished!</h2>
+        <p id="finalScore">Score: 0/0</p>
+        <p id="finalMessage">Great job practicing today.</p>
+
+        <div id="reviewList" class="review-list"></div>
+
+        <button id="restartBtn" class="btn-primary">Create another quiz</button>
       </div>
+    </section>
 
-      <div id="questionMeta" class="question-meta"></div>
-      <div id="questionText" class="question-text"></div>
+  </main>
 
-      <div id="freeTextArea" class="hidden">
-        <input
-          type="text"
-          id="freeTextInput"
-          placeholder="Type your answer here"
-        />
-        <button id="submitTextAnswerBtn">Submit Answer</button>
-      </div>
-
-      <div id="multipleChoiceArea" class="choices hidden"></div>
-
-      <div id="feedbackBox" class="feedback hidden">
-        <h3>Feedback</h3>
-        <p id="feedbackText"></p>
-        <p id="correctAnswerText"></p>
-      </div>
-
-      <button id="nextQuestionBtn" class="hidden">Next Question</button>
-    </div>
-  </div>
-
-  <script src="/static/js/app.js"></script>
+  <script src="/static/js/app.js?v=2"></script>
 </body>
 </html>

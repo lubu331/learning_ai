@@ -28,5 +28,15 @@
     "correct_answer_summary": "La respuesta correcta es: 7",
     "feedback_text": "No es correcto. 4 + 3 es igual a 7.",
     "review_status": "pending"
+  },
+  {
+    "question_code": "G2-MATH-0002",
+    "question_tag": "grade2.math.subtraction",
+    "subject_name": "Matemáticas",
+    "topic_name": "Restas básicas",
+    "student_response": "8",
+    "correct_answer_summary": "La respuesta correcta es: 4",
+    "feedback_text": "No es correcto. 9 menos 5 es igual a 4.",
+    "review_status": "pending"
   }
 ]
