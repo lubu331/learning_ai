@@ -1,33 +1,27 @@
-from sqlalchemy import Column, Integer, String, Text, Float, DateTime
-from sqlalchemy.sql import func
-from app.db import Base
+from sqlalchemy import Column, Integer, String, Text, ForeignKey, Boolean, DateTime, Float
+from sqlalchemy.orm import relationship
+from datetime import datetime
+from app.database import Base
 
-
-class IncorrectFeedbackLog(Base):
-    __tablename__ = "incorrect_feedback_log"
-
+class User(Base):
+    __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
-    question_code = Column(String, nullable=False, index=True)
-    question_tag = Column(String, nullable=False, index=True)
-    subject_name = Column(String, nullable=True)
-    topic_name = Column(String, nullable=True)
-    student_response = Column(Text, nullable=True)
-    correct_answer_summary = Column(Text, nullable=True)
-    feedback_text = Column(Text, nullable=True)
-    review_status = Column(String, default="pending")
-    teacher_parent_note = Column(Text, nullable=True)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    username = Column(String, unique=True, index=True, nullable=False)
+    hashed_password = Column(String, nullable=False)
+    role = Column(String, default="student") # student, teacher, admin
 
-
-class QuizAttempt(Base):
-    __tablename__ = "quiz_attempts"
-
+class Quiz(Base):
+    __tablename__ = "quizzes"
     id = Column(Integer, primary_key=True, index=True)
-    student_name = Column(String, nullable=True)
+    title = Column(String, nullable=False)
+    topic = Column(String, nullable=False)
     grade_level = Column(String, nullable=False)
-    subject = Column(String, nullable=False)
-    topic = Column(String, nullable=True)
-    question_mode = Column(String, nullable=False)
-    total_questions = Column(Integer, nullable=False)
+    questions_json = Column(Text, nullable=False) # Stores the generated JSON
+
+class Attempt(Base):
+    __tablename__ = "attempts"
+    id = Column(Integer, primary_key=True, index=True)
+    quiz_id = Column(Integer, ForeignKey("quizzes.id"))
+    user_id = Column(Integer, ForeignKey("users.id"))
     score = Column(Float, default=0.0)
-    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    timestamp = Column(DateTime, default=datetime.utcnow)
