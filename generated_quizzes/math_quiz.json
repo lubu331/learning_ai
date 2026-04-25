@@ -1,0 +1,132 @@
+[
+  {
+    "question_code": "Q2",
+    "question_tag": "grade2.math",
+    "question_type": "multiple_choice",
+    "prompt_text": "9 - 3 = ?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "5"
+      },
+      {
+        "label": "B",
+        "text": "6"
+      },
+      {
+        "label": "C",
+        "text": "7"
+      },
+      {
+        "label": "D",
+        "text": "8"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Add/subtract the numbers carefully. The correct answer is 6."
+  },
+  {
+    "question_code": "Q1",
+    "question_tag": "grade2.math",
+    "question_type": "multiple_choice",
+    "prompt_text": "6 + 6 = ?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "10"
+      },
+      {
+        "label": "B",
+        "text": "11"
+      },
+      {
+        "label": "C",
+        "text": "12"
+      },
+      {
+        "label": "D",
+        "text": "13"
+      }
+    ],
+    "correct_answer": "C",
+    "explanation": "Add/subtract the numbers carefully. The correct answer is 12."
+  },
+  {
+    "question_code": "Q3",
+    "question_tag": "grade2.math",
+    "question_type": "multiple_choice",
+    "prompt_text": "14 + 5 = ?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "18"
+      },
+      {
+        "label": "B",
+        "text": "19"
+      },
+      {
+        "label": "C",
+        "text": "20"
+      },
+      {
+        "label": "D",
+        "text": "21"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Add/subtract the numbers carefully. The correct answer is 19."
+  },
+  {
+    "question_code": "Q4",
+    "question_tag": "grade2.math",
+    "question_type": "multiple_choice",
+    "prompt_text": "7 - 3 = ?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "4"
+      },
+      {
+        "label": "B",
+        "text": "5"
+      },
+      {
+        "label": "C",
+        "text": "6"
+      },
+      {
+        "label": "D",
+        "text": "7"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Add/subtract the numbers carefully. The correct answer is 4."
+  },
+  {
+    "question_code": "Q5",
+    "question_tag": "grade2.math",
+    "question_type": "multiple_choice",
+    "prompt_text": "8 + 2 = ?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "9"
+      },
+      {
+        "label": "B",
+        "text": "10"
+      },
+      {
+        "label": "C",
+        "text": "11"
+      },
+      {
+        "label": "D",
+        "text": "12"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Add/subtract the numbers carefully. The correct answer is 10."
+  }
+]

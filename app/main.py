@@ -1,5 +1,6 @@
 import json
 import random
+import re
 import shutil
 from pathlib import Path
 from typing import Optional
@@ -9,8 +10,11 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
-from app.services.ai_service import generate_questions_with_ollama
-from app.services.pdf_service import extract_pdf_text
+from app.services.ai_service import (
+    generate_questions_from_pdf_images,
+    generate_questions_with_ollama,
+)
+from app.services.pdf_service import extract_pdf_text, pdf_to_images_base64
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,7 +26,6 @@ UPLOADS_DIR.mkdir(exist_ok=True)
 GENERATED_DIR.mkdir(exist_ok=True)
 
 app = FastAPI(title="Learning AI Quiz App")
-
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
@@ -42,6 +45,178 @@ def list_pdfs():
     return {"files": files}
 
 
+def evaluate_math(expr: str):
+    match = re.search(r"(\d+)\s*([+\-])\s*(\d+)", expr)
+
+    if not match:
+        return None
+
+    a, op, b = match.groups()
+    a = int(a)
+    b = int(b)
+
+    if op == "+":
+        return a + b
+
+    if op == "-":
+        return a - b
+
+    return None
+
+
+def fix_math_answers(questions: list[dict]):
+    for q in questions:
+        correct = evaluate_math(q.get("prompt_text", ""))
+
+        if correct is None:
+            continue
+
+        q["explanation"] = (
+            f"Add or subtract the numbers carefully. "
+            f"The correct answer is {correct}."
+        )
+
+        if q.get("question_type") == "multiple_choice":
+            found = False
+
+            for choice in q.get("choices", []):
+                choice_text = str(choice.get("text", "")).strip()
+
+                if choice_text == str(correct):
+                    q["correct_answer"] = choice.get("label")
+                    found = True
+                    break
+
+            if not found:
+                q["choices"] = build_math_choices(correct)
+                q["correct_answer"] = "A"
+
+        else:
+            q["correct_answer"] = str(correct)
+
+    return questions
+
+
+def build_math_choices(correct: int):
+    wrong_values = set()
+
+    while len(wrong_values) < 3:
+        offset = random.choice([-5, -4, -3, -2, -1, 1, 2, 3, 4, 5])
+        value = correct + offset
+
+        if value >= 0 and value != correct:
+            wrong_values.add(value)
+
+    values = [correct] + list(wrong_values)
+    random.shuffle(values)
+
+    labels = ["A", "B", "C", "D"]
+    choices = []
+
+    for label, value in zip(labels, values):
+        choices.append({"label": label, "text": str(value)})
+
+    return choices
+
+
+def normalize_question(q: dict, index: int, grade_level: str, subject: str, question_type: str):
+    q.setdefault("question_code", f"Q{index}")
+    q.setdefault("question_tag", f"grade{grade_level}.{subject}")
+    q.setdefault("question_type", question_type)
+    q.setdefault("prompt_text", "")
+    q.setdefault("choices", [])
+    q.setdefault("correct_answer", "")
+    q.setdefault("explanation", "Good effort. Review the correct answer.")
+
+    return q
+
+def normalize_math_prompt(prompt: str) -> str:
+    match = re.search(r"(\d+)\s*([+\-])\s*(\d+)", prompt)
+
+    if match:
+        a, op, b = match.groups()
+        return f"{a} {op} {b}"
+
+    prompt = prompt.replace("__________", "")
+    prompt = prompt.replace("____", "")
+    prompt = prompt.replace("___", "")
+    prompt = prompt.replace("__", "")
+    prompt = prompt.replace("_", "")
+    prompt = prompt.replace("=", "")
+
+    return prompt.strip()
+
+
+def question_key(q: dict) -> str:
+    prompt = normalize_math_prompt(q.get("prompt_text", ""))
+    return prompt.lower().strip()
+
+
+def remove_duplicate_questions(questions: list[dict]):
+    seen = set()
+    unique = []
+
+    for q in questions:
+        key = question_key(q)
+
+        if key in seen:
+            continue
+
+        seen.add(key)
+        q["prompt_text"] = normalize_math_prompt(q.get("prompt_text", ""))
+        unique.append(q)
+
+    return unique
+
+def generate_quiz_in_batches(
+    *,
+    pdf_text: str,
+    images: Optional[list[str]],
+    grade_level: str,
+    subject: str,
+    question_type: str,
+    limit: int,
+):
+    all_questions = []
+    batch_size = 5
+    batch_number = 0
+
+    while len(all_questions) < limit:
+        batch_number += 1
+
+        remaining = limit - len(all_questions)
+        current_batch_size = min(batch_size, remaining)
+
+        print(f"Generating batch {batch_number}: {current_batch_size} questions")
+
+        if pdf_text.strip():
+            batch = generate_questions_with_ollama(
+                pdf_text=pdf_text,
+                grade_level=grade_level,
+                subject=subject,
+                question_type=question_type,
+                limit=current_batch_size,
+            )
+        else:
+            batch = generate_questions_from_pdf_images(
+                images_base64=images or [],
+                grade_level=grade_level,
+                subject=subject,
+                question_type=question_type,
+                limit=current_batch_size,
+            )
+
+        if not isinstance(batch, list):
+            raise HTTPException(
+                status_code=500,
+                detail="Ollama did not return a valid question list.",
+            )
+
+        all_questions.extend(batch)
+
+    return all_questions[:limit]
+
+
 @app.post("/quiz")
 async def create_quiz(
     grade_level: str = Form(...),
@@ -57,7 +232,7 @@ async def create_quiz(
         safe_name = Path(file.filename).name
 
         if not safe_name.lower().endswith(".pdf"):
-            raise HTTPException(status_code=400, detail="Only PDF files are supported for now.")
+            raise HTTPException(status_code=400, detail="Only PDF files are supported.")
 
         pdf_path = UPLOADS_DIR / safe_name
 
@@ -72,26 +247,56 @@ async def create_quiz(
             raise HTTPException(status_code=404, detail="Selected PDF does not exist.")
 
     else:
-        raise HTTPException(status_code=400, detail="Upload a PDF or select an existing one.")
+        raise HTTPException(
+            status_code=400,
+            detail="Upload a PDF or select an existing one.",
+        )
 
     pdf_text = extract_pdf_text(pdf_path)
+    images = None
 
     if not pdf_text.strip():
-        raise HTTPException(status_code=400, detail="Could not extract text from the PDF.")
+        images = pdf_to_images_base64(pdf_path, max_pages=1)
 
-    questions = generate_questions_with_ollama(
+    questions = generate_quiz_in_batches(
         pdf_text=pdf_text,
+        images=images,
         grade_level=grade_level,
         subject=subject,
         question_type=question_type,
         limit=limit,
     )
 
+    if not questions:
+        raise HTTPException(
+            status_code=500,
+            detail="Could not generate quiz questions. Check Ollama output.",
+        )
+
+    normalized_questions = []
+
+    for index, q in enumerate(questions, start=1):
+        normalized_questions.append(
+            normalize_question(
+                q=q,
+                index=index,
+                grade_level=grade_level,
+                subject=subject,
+                question_type=question_type,
+            )
+        )
+
+    questions = fix_math_answers(normalized_questions)
+    questions = remove_duplicate_questions(questions)
+
     random.shuffle(questions)
     questions = questions[:limit]
 
     output_file = GENERATED_DIR / f"{pdf_path.stem}_quiz.json"
-    output_file.write_text(json.dumps(questions, indent=2, ensure_ascii=False), encoding="utf-8")
+    output_file.write_text(
+        json.dumps(questions, indent=2, ensure_ascii=False),
+        encoding="utf-8",
+    )
 
     return {
         "source_pdf": pdf_path.name,
@@ -111,6 +316,6 @@ def submit_answer(request: AnswerRequest):
 
     return {
         "is_correct": is_correct,
-        "feedback_text": "Correct!" if is_correct else explanation or "Review the correct answer.",
+        "feedback_text": "Correct!" if is_correct else explanation,
         "correct_answer_summary": f"Correct answer: {correct_answer}",
     }
