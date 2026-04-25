@@ -1,43 +1,81 @@
-import requests
-from app.services.pdf_service import extract_text_from_pdf
 import json
+import re
+import requests
 
-OLLAMA_URL = "http://localhost:11434/api/generate"  # Default Ollama port
+
+OLLAMA_URL = "http://localhost:11434/api/generate"
+OLLAMA_MODEL = "llama3.2"
 
 
-def generate_quiz_from_text(text: str, topic: str, grade: str) -> dict:
-    prompt = f"""You are an educational assistant. 
-    Based on the following text, generate 5 multiple-choice questions for a {grade} student studying '{topic}'.
+def _extract_json_array(text: str):
+    match = re.search(r"\[.*\]", text, re.DOTALL)
 
-    Format strictly as JSON array of objects:
-    [
-        {{ "question": "...", "options": ["A", "B", "C", "D"], "answer": "A" }}
-    ]
+    if not match:
+        raise ValueError("Ollama did not return a JSON array.")
 
-    Text content:
-    {text[:2000]}"""  # Limiting context for local demo
+    return json.loads(match.group(0))
 
-    try:
-        response = requests.post(OLLAMA_URL, json={
-            "model": "llama3",  # Ensure you have llama3 pulled in Ollama
+
+def generate_questions_with_ollama(
+    pdf_text: str,
+    grade_level: str,
+    subject: str,
+    question_type: str,
+    limit: int,
+):
+    prompt = f"""
+You are creating a quiz for a child.
+
+Grade: {grade_level}
+Subject: {subject}
+Question type: {question_type}
+Number of questions: {limit}
+
+Use ONLY this PDF content:
+
+{pdf_text[:12000]}
+
+Return ONLY a valid JSON array.
+No markdown. No explanation outside JSON.
+
+Each question must use this schema:
+
+[
+  {{
+    "question_code": "Q1",
+    "question_tag": "grade{grade_level}.{subject}",
+    "question_type": "{question_type}",
+    "prompt_text": "Question text here",
+    "choices": [
+      {{"label": "A", "text": "option A"}},
+      {{"label": "B", "text": "option B"}},
+      {{"label": "C", "text": "option C"}},
+      {{"label": "D", "text": "option D"}}
+    ],
+    "correct_answer": "A",
+    "explanation": "Short kid-friendly explanation"
+  }}
+]
+
+If question_type is free_text, use an empty choices array and put the expected answer in correct_answer.
+"""
+
+    response = requests.post(
+        OLLAMA_URL,
+        json={
+            "model": OLLAMA_MODEL,
             "prompt": prompt,
-            "stream": False
-        })
+            "stream": False,
+        },
+        timeout=180,
+    )
 
-        if response.status_code == 200:
-            result = response.json()
-            # Parse the JSON string from the LLM output
-            questions_data = json.loads(result['response'])
-            return {"success": True, "questions": questions_data}
-        else:
-            return {"success": False, "error": "Local AI connection failed"}
-    except Exception as e:
-        return {"success": False, "error": str(e)}
+    response.raise_for_status()
+    raw = response.json()["response"]
 
+    questions = _extract_json_array(raw)
 
-def generate_quiz_from_file(file_path: str, topic: str, grade: str) -> dict:
-    text = extract_text_from_pdf(file_path)
-    if not text or "Error" in text:
-        return {"success": False, "error": "Could not read PDF"}
+    if not isinstance(questions, list):
+        raise ValueError("Ollama response is not a list.")
 
-    return generate_quiz_from_text(text, topic, grade)
+    return questions

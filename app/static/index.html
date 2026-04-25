@@ -4,20 +4,19 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Learning AI Quiz App</title>
-  <link rel="stylesheet" href="/static/css/style.css?v=2" />
+  <link rel="stylesheet" href="/static/css/style.css?v=3" />
 </head>
 <body>
   <main class="app-shell">
 
-    <!-- PAGE 1: SETUP -->
     <section id="setupPage" class="page setup-page">
       <header class="hero-card">
         <div>
           <div class="brand-pill">Learning AI</div>
-          <h1>Build a quiz for today’s lesson</h1>
+          <h1>Build a quiz from a PDF</h1>
           <p>
-            Choose the grade, topic, question type, and optionally add files
-            your quiz can use later.
+            Upload a lesson PDF or reuse an existing one. Ollama will read it
+            and generate randomized quiz questions.
           </p>
         </div>
 
@@ -38,12 +37,16 @@
           <label>Grade</label>
           <select id="gradeLevel">
             <option value="2" selected>2nd Grade</option>
+            <option value="3">3rd Grade</option>
+            <option value="4">4th Grade</option>
           </select>
 
           <label>Topic</label>
           <select id="subject">
             <option value="math">Math</option>
             <option value="sociales">Sociales Colombia</option>
+            <option value="english">English</option>
+            <option value="science">Science</option>
           </select>
 
           <label>Question type</label>
@@ -61,23 +64,26 @@
         </div>
 
         <div class="panel">
-          <h2>Learning files</h2>
+          <h2>Learning PDF</h2>
           <p class="muted">
-            Upload class notes, worksheets, PDFs, or pictures. For now this is
-            only the UI. Later we will connect file reading and AI question generation.
+            Upload a new PDF or select a PDF already stored locally in the app.
           </p>
+
+          <label>Use existing PDF</label>
+          <select id="existingPdf">
+            <option value="">Upload a new PDF</option>
+          </select>
 
           <label for="fileUpload" class="upload-box">
             <span class="upload-icon">⬆️</span>
-            <strong>Drop files here or click to browse</strong>
-            <small>Accepted later: TXT, PDF, PNG, JPG</small>
+            <strong>Click to upload a PDF</strong>
+            <small>Accepted now: PDF only</small>
           </label>
 
           <input
             id="fileUpload"
             type="file"
-            multiple
-            accept=".txt,.pdf,.png,.jpg,.jpeg"
+            accept=".pdf"
             hidden
           />
 
@@ -86,13 +92,12 @@
       </section>
 
       <div class="action-row">
-        <button id="startQuizBtn" class="btn-primary">Start Quiz</button>
+        <button id="startQuizBtn" class="btn-primary">Generate Quiz</button>
       </div>
 
       <p id="statusMessage" class="status-message"></p>
     </section>
 
-    <!-- PAGE 2: QUIZ -->
     <section id="quizPage" class="page quiz-page hidden">
       <header class="quiz-topbar">
         <div>
@@ -175,7 +180,6 @@
       </article>
     </section>
 
-    <!-- RESULTS -->
     <section id="resultsPage" class="page results-page hidden">
       <div class="results-card">
         <div class="result-icon">⭐</div>
@@ -191,6 +195,6 @@
 
   </main>
 
-  <script src="/static/js/app.js?v=2"></script>
+  <script src="/static/js/app.js?v=3"></script>
 </body>
 </html>

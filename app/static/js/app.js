@@ -2,7 +2,6 @@ let quizQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
 let answerSubmitted = false;
-let reviewItems = [];
 
 const setupPage = document.getElementById("setupPage");
 const quizPage = document.getElementById("quizPage");
@@ -16,16 +15,16 @@ const gradeLevelInput = document.getElementById("gradeLevel");
 const subjectInput = document.getElementById("subject");
 const questionTypeInput = document.getElementById("questionType");
 const limitInput = document.getElementById("limit");
-
 const fileUpload = document.getElementById("fileUpload");
 const uploadedFiles = document.getElementById("uploadedFiles");
+
+const existingPdfSelect = document.getElementById("existingPdf");
 
 const quizStudentName = document.getElementById("quizStudentName");
 const scoreDisplay = document.getElementById("scoreDisplay");
 const questionCounter = document.getElementById("questionCounter");
 const questionTag = document.getElementById("questionTag");
 const progressFill = document.getElementById("progressFill");
-
 const questionNumber = document.getElementById("questionNumber");
 const questionText = document.getElementById("questionText");
 
@@ -39,29 +38,15 @@ const feedbackBox = document.getElementById("feedbackBox");
 const feedbackTitle = document.getElementById("feedbackTitle");
 const feedbackText = document.getElementById("feedbackText");
 const correctAnswerText = document.getElementById("correctAnswerText");
-
 const nextQuestionBtn = document.getElementById("nextQuestionBtn");
 
-const sendQuestionReportBtn = document.getElementById("sendQuestionReportBtn");
-const questionReportNote = document.getElementById("questionReportNote");
-const reportStatus = document.getElementById("reportStatus");
-
 const finalScore = document.getElementById("finalScore");
-const finalMessage = document.getElementById("finalMessage");
-const reviewList = document.getElementById("reviewList");
 const restartBtn = document.getElementById("restartBtn");
 
 startQuizBtn.addEventListener("click", loadQuiz);
 submitTextAnswerBtn.addEventListener("click", submitFreeTextAnswer);
 nextQuestionBtn.addEventListener("click", goToNextQuestion);
 restartBtn.addEventListener("click", restartApp);
-sendQuestionReportBtn.addEventListener("click", sendQuestionReport);
-
-freeTextInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter" && !answerSubmitted) {
-    submitFreeTextAnswer();
-  }
-});
 
 fileUpload.addEventListener("change", () => {
   uploadedFiles.innerHTML = "";
@@ -69,43 +54,60 @@ fileUpload.addEventListener("change", () => {
   Array.from(fileUpload.files).forEach((file) => {
     const item = document.createElement("div");
     item.className = "file-pill";
-    item.textContent = `📄 ${file.name}`;
+    item.textContent = file.name;
     uploadedFiles.appendChild(item);
   });
 });
 
+async function loadExistingPdfs() {
+  const response = await fetch("/pdfs");
+  const data = await response.json();
+
+  existingPdfSelect.innerHTML = `<option value="">Upload a new PDF</option>`;
+
+  data.files.forEach((file) => {
+    const option = document.createElement("option");
+    option.value = file;
+    option.textContent = file;
+    existingPdfSelect.appendChild(option);
+  });
+}
+
 async function loadQuiz() {
   const studentName = studentNameInput.value.trim();
-  const gradeLevel = gradeLevelInput.value;
-  const subject = subjectInput.value;
-  const questionType = questionTypeInput.value;
-  const limit = parseInt(limitInput.value, 10);
 
   if (!studentName) {
     statusMessage.textContent = "Please enter the student name.";
     return;
   }
 
-  statusMessage.textContent = "Loading quiz...";
+  const formData = new FormData();
+  formData.append("grade_level", gradeLevelInput.value);
+  formData.append("subject", subjectInput.value);
+  formData.append("question_type", questionTypeInput.value);
+  formData.append("limit", limitInput.value);
+
+  if (existingPdfSelect.value) {
+    formData.append("existing_pdf", existingPdfSelect.value);
+  } else if (fileUpload.files.length > 0) {
+    formData.append("file", fileUpload.files[0]);
+  } else {
+    statusMessage.textContent = "Upload a PDF or select an existing one.";
+    return;
+  }
+
+  statusMessage.textContent = "Generating quiz with Ollama...";
 
   try {
     const response = await fetch("/quiz", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        grade_level: gradeLevel,
-        subject: subject,
-        question_type: questionType,
-        limit: limit
-      })
+      body: formData,
     });
 
     const data = await response.json();
 
     if (!response.ok) {
-      statusMessage.textContent = data.detail || "Could not load quiz.";
+      statusMessage.textContent = data.detail || "Could not generate quiz.";
       return;
     }
 
@@ -113,7 +115,6 @@ async function loadQuiz() {
     currentQuestionIndex = 0;
     score = 0;
     answerSubmitted = false;
-    reviewItems = [];
 
     quizStudentName.textContent = studentName;
     scoreDisplay.textContent = "Score: 0";
@@ -125,181 +126,91 @@ async function loadQuiz() {
     renderQuestion();
   } catch (error) {
     console.error(error);
-    statusMessage.textContent = "Error loading quiz. Check the browser console.";
+    statusMessage.textContent = "Error generating quiz. Check Ollama and terminal logs.";
   }
-}
-
-function resetQuestionUI() {
-  answerSubmitted = false;
-
-  feedbackBox.classList.add("hidden");
-  feedbackBox.classList.remove("correct", "incorrect");
-  feedbackTitle.textContent = "Feedback";
-  feedbackText.textContent = "";
-  correctAnswerText.textContent = "";
-
-  nextQuestionBtn.classList.add("hidden");
-
-  freeTextInput.value = "";
-  freeTextInput.disabled = false;
-  submitTextAnswerBtn.disabled = false;
-
-  multipleChoiceArea.innerHTML = "";
-
-  questionReportNote.value = "";
-  reportStatus.textContent = "";
-
-  const radios = document.querySelectorAll("input[name='reportReason']");
-  radios.forEach((radio) => {
-    radio.checked = false;
-  });
 }
 
 function renderQuestion() {
   const question = quizQuestions[currentQuestionIndex];
-  resetQuestionUI();
-
   const total = quizQuestions.length;
   const current = currentQuestionIndex + 1;
-  const progressPercent = Math.round(((current - 1) / total) * 100);
+
+  answerSubmitted = false;
+
+  feedbackBox.classList.add("hidden");
+  nextQuestionBtn.classList.add("hidden");
+  multipleChoiceArea.innerHTML = "";
+  freeTextInput.value = "";
+  freeTextInput.disabled = false;
+  submitTextAnswerBtn.disabled = false;
 
   questionCounter.textContent = `Question ${current} of ${total}`;
   questionNumber.textContent = `Question ${current}`;
   questionTag.textContent = question.question_tag || "";
   questionText.textContent = question.prompt_text;
-
-  progressFill.style.width = `${progressPercent}%`;
+  progressFill.style.width = `${Math.round(((current - 1) / total) * 100)}%`;
 
   if (question.question_type === "free_text") {
     freeTextArea.classList.remove("hidden");
     multipleChoiceArea.classList.add("hidden");
-    setTimeout(() => freeTextInput.focus(), 50);
-  } else if (question.question_type === "multiple_choice") {
+  } else {
     freeTextArea.classList.add("hidden");
     multipleChoiceArea.classList.remove("hidden");
-    renderChoices(question.choices || []);
-  }
-}
 
-function renderChoices(choices) {
-  multipleChoiceArea.innerHTML = "";
-
-  choices.forEach((choice) => {
-    const btn = document.createElement("button");
-    btn.className = "option-btn";
-    btn.textContent = `${choice.label}. ${choice.text}`;
-    btn.dataset.label = choice.label;
-    btn.dataset.correct = choice.is_correct ? "true" : "false";
-
-    btn.addEventListener("click", () => {
-      if (!answerSubmitted) {
-        submitAnswer(choice.label);
-      }
+    question.choices.forEach((choice) => {
+      const btn = document.createElement("button");
+      btn.className = "option-btn";
+      btn.textContent = `${choice.label}. ${choice.text}`;
+      btn.addEventListener("click", () => submitAnswer(choice.label));
+      multipleChoiceArea.appendChild(btn);
     });
-
-    multipleChoiceArea.appendChild(btn);
-  });
+  }
 }
 
 async function submitFreeTextAnswer() {
-  const value = freeTextInput.value.trim();
+  const answer = freeTextInput.value.trim();
 
-  if (!value || answerSubmitted) {
-    return;
-  }
+  if (!answer) return;
 
-  await submitAnswer(value);
+  await submitAnswer(answer);
 }
 
 async function submitAnswer(studentAnswer) {
+  if (answerSubmitted) return;
+
   const question = quizQuestions[currentQuestionIndex];
 
-  try {
-    const response = await fetch("/answer", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        question: question,
-        student_answer: studentAnswer
-      })
-    });
-
-    const result = await response.json();
-
-    if (!response.ok) {
-      alert(result.detail || "Error submitting answer.");
-      return;
-    }
-
-    answerSubmitted = true;
-
-    if (result.is_correct) {
-      score += 1;
-      scoreDisplay.textContent = `Score: ${score}`;
-    }
-
-    if (question.question_type === "free_text") {
-      freeTextInput.disabled = true;
-      submitTextAnswerBtn.disabled = true;
-    }
-
-    if (question.question_type === "multiple_choice") {
-      markChoiceResults(studentAnswer);
-    }
-
-    reviewItems.push({
-      question: question.prompt_text,
-      is_correct: result.is_correct,
-      feedback: result.feedback_text,
-      correct_answer: result.correct_answer_summary
-    });
-
-    showFeedback(result);
-  } catch (error) {
-    console.error(error);
-    alert("Unexpected error submitting answer.");
-  }
-}
-
-function markChoiceResults(selectedLabel) {
-  const buttons = multipleChoiceArea.querySelectorAll(".option-btn");
-
-  buttons.forEach((btn) => {
-    btn.disabled = true;
-
-    const label = btn.dataset.label;
-    const isCorrect = btn.dataset.correct === "true";
-
-    if (isCorrect) {
-      btn.classList.add("correct");
-    } else if (label === selectedLabel) {
-      btn.classList.add("incorrect");
-    }
+  const response = await fetch("/answer", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({
+      question,
+      student_answer: studentAnswer,
+    }),
   });
-}
 
-function showFeedback(result) {
-  feedbackBox.classList.remove("hidden");
-  feedbackBox.classList.remove("correct", "incorrect");
+  const result = await response.json();
+
+  answerSubmitted = true;
 
   if (result.is_correct) {
-    feedbackBox.classList.add("correct");
-    feedbackTitle.textContent = "Correct!";
-  } else {
-    feedbackBox.classList.add("incorrect");
-    feedbackTitle.textContent = "Let’s review";
+    score++;
+    scoreDisplay.textContent = `Score: ${score}`;
   }
 
+  feedbackBox.classList.remove("hidden");
+  feedbackTitle.textContent = result.is_correct ? "Correct!" : "Let’s review";
   feedbackText.textContent = result.feedback_text;
   correctAnswerText.textContent = result.correct_answer_summary;
 
   nextQuestionBtn.classList.remove("hidden");
+
+  freeTextInput.disabled = true;
+  submitTextAnswerBtn.disabled = true;
 }
 
 function goToNextQuestion() {
-  currentQuestionIndex += 1;
+  currentQuestionIndex++;
 
   if (currentQuestionIndex >= quizQuestions.length) {
     showResults();
@@ -310,90 +221,17 @@ function goToNextQuestion() {
 }
 
 function showResults() {
-  const total = quizQuestions.length;
-  const percentage = total > 0 ? Math.round((score / total) * 100) : 0;
-
-  progressFill.style.width = "100%";
-
   quizPage.classList.add("hidden");
   resultsPage.classList.remove("hidden");
-
-  finalScore.textContent = `Score: ${score}/${total}`;
-
-  if (percentage === 100) {
-    finalMessage.textContent = "Amazing! Perfect score.";
-  } else if (percentage >= 70) {
-    finalMessage.textContent = "Great work! Keep practicing.";
-  } else {
-    finalMessage.textContent = "Good effort. Let’s review and try again.";
-  }
-
-  renderReviewList();
-}
-
-function renderReviewList() {
-  reviewList.innerHTML = "";
-
-  reviewItems.forEach((item) => {
-    const div = document.createElement("div");
-    div.className = `review-item ${item.is_correct ? "correct" : "incorrect"}`;
-
-    div.innerHTML = `
-      <strong>${escapeHtml(item.question)}</strong>
-      <p>${escapeHtml(item.feedback)}</p>
-      <p>${escapeHtml(item.correct_answer)}</p>
-    `;
-
-    reviewList.appendChild(div);
-  });
-}
-
-function sendQuestionReport() {
-  const question = quizQuestions[currentQuestionIndex];
-
-  if (!question) {
-    reportStatus.textContent = "No active question to report.";
-    return;
-  }
-
-  const selectedReason = document.querySelector("input[name='reportReason']:checked");
-  const note = questionReportNote.value.trim();
-
-  if (!selectedReason && !note) {
-    reportStatus.textContent = "Choose a reason or write a note first.";
-    return;
-  }
-
-  console.log("Question report:", {
-    question_code: question.question_code,
-    question_tag: question.question_tag,
-    reason: selectedReason ? selectedReason.value : null,
-    note: note
-  });
-
-  reportStatus.textContent = "Feedback saved locally in browser console for now.";
+  finalScore.textContent = `Score: ${score}/${quizQuestions.length}`;
 }
 
 function restartApp() {
-  quizQuestions = [];
-  currentQuestionIndex = 0;
-  score = 0;
-  answerSubmitted = false;
-  reviewItems = [];
-
   resultsPage.classList.add("hidden");
   quizPage.classList.add("hidden");
   setupPage.classList.remove("hidden");
-
   statusMessage.textContent = "";
-  studentNameInput.focus();
+  loadExistingPdfs();
 }
 
-function escapeHtml(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
+loadExistingPdfs();

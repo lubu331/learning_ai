@@ -1,15 +1,5 @@
-# Web Framework
-fastapi==0.104.1
-uvicorn[standard]==0.24.0
-
-# Database & Security
-sqlalchemy==2.0.49
-passlib[bcrypt]==1.7.4
-python-jose[cryptography]==3.3.0
-alembic==1.12.1
-
-# File Handling & AI
-python-multipart==0.0.6  # For file uploads
-pdfplumber==0.9.0        # PDF text extraction
-jinja2==3.1.2            # HTML Templates
-requests==2.31.0         # For calling local AI APIs (like Ollama)
+fastapi
+uvicorn
+python-multipart
+pypdf
+requests
