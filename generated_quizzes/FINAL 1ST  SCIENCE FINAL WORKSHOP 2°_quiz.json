@@ -1,0 +1,156 @@
+[
+  {
+    "question_code": "Q4",
+    "question_tag": "grade2.science",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is a fossil?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "A toy in the ground"
+      },
+      {
+        "label": "B",
+        "text": "A bone or shape of a plant or animal from long ago"
+      },
+      {
+        "label": "C",
+        "text": "A new rock"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Fossils are the remains or traces of ancient plants and animals."
+  },
+  {
+    "question_code": "Q5",
+    "question_tag": "grade2.science",
+    "question_type": "multiple_choice",
+    "prompt_text": "Where can we find fossils?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "In a bottle of water"
+      },
+      {
+        "label": "B",
+        "text": "In rocks"
+      },
+      {
+        "label": "C",
+        "text": "In our clothes"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Fossils can be found in rocks, especially in places where there has been a lot of digging or erosion."
+  },
+  {
+    "question_code": "Q3",
+    "question_tag": "grade2.science",
+    "question_type": "multiple_choice",
+    "prompt_text": "What helps people grow healthy?",
+    "choices": [
+      {
+        "label": "a",
+        "text": "Eating vegetables and sleeping well"
+      },
+      {
+        "label": "b",
+        "text": "Eating candy every day"
+      },
+      {
+        "label": "c",
+        "text": "Not sleeping"
+      }
+    ],
+    "correct_answer": "a",
+    "explanation": "Eating vegetables and sleeping well helps people grow healthy"
+  },
+  {
+    "question_code": "Q1",
+    "question_tag": "grade2.science",
+    "question_type": "multiple_choice",
+    "prompt_text": "How do animals grow?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "They eat and grow bigger"
+      },
+      {
+        "label": "B",
+        "text": "They stay the same"
+      },
+      {
+        "label": "C",
+        "text": "They disappear"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Animals grow by eating food, like fruits and vegetables."
+  },
+  {
+    "question_code": "Q2",
+    "question_tag": "grade2.science",
+    "question_type": "multiple_choice",
+    "prompt_text": "Correctly lists each step in the life cycle",
+    "choices": [
+      {
+        "label": "a",
+        "text": "1. Plant, 2. Seed, 3. Flower, 4. Small plant"
+      },
+      {
+        "label": "b",
+        "text": "1. Seed, 2. Flower, 3. Small plant, 4. Plant"
+      }
+    ],
+    "correct_answer": "a",
+    "explanation": "The correct order is: Plant, Seed, Flower, Small plant"
+  },
+  {
+    "question_code": "Q3",
+    "question_tag": "grade2.science",
+    "question_type": "multiple_choice",
+    "prompt_text": "Which helps people grow healthy?",
+    "choices": [
+      {
+        "label": "a",
+        "text": "Eating vegetables and sleeping well"
+      },
+      {
+        "label": "b",
+        "text": "Eating candy every day"
+      },
+      {
+        "label": "c",
+        "text": "Not sleeping"
+      }
+    ],
+    "correct_answer": "a",
+    "explanation": "Eating healthy foods like fruits, vegetables, and whole grains helps our bodies grow strong."
+  },
+  {
+    "question_code": "Q2",
+    "question_tag": "grade2.science",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is the correct order of a life cycle?",
+    "choices": [
+      {
+        "label": "1. Plant",
+        "text": "Plant"
+      },
+      {
+        "label": "2. Seed",
+        "text": "Seed"
+      },
+      {
+        "label": "3. Flower",
+        "text": "Flower"
+      },
+      {
+        "label": "4. Small plant",
+        "text": "Small plant"
+      }
+    ],
+    "correct_answer": "2",
+    "explanation": "The correct order is: Seed -> Plant -> Flower -> Small plant"
+  }
+]

@@ -1,57 +1,5 @@
 [
   {
-    "question_code": "Q4",
-    "question_tag": "grade2.math",
-    "question_type": "multiple_choice",
-    "prompt_text": "38 + 28",
-    "choices": [
-      {
-        "label": "A",
-        "text": "60"
-      },
-      {
-        "label": "B",
-        "text": "65"
-      },
-      {
-        "label": "C",
-        "text": "66"
-      },
-      {
-        "label": "D",
-        "text": "70"
-      }
-    ],
-    "correct_answer": "C",
-    "explanation": "Add or subtract the numbers carefully. The correct answer is 66."
-  },
-  {
-    "question_code": "Q5",
-    "question_tag": "grade2.math",
-    "question_type": "multiple_choice",
-    "prompt_text": "2 + 6",
-    "choices": [
-      {
-        "label": "A",
-        "text": "8"
-      },
-      {
-        "label": "B",
-        "text": "10"
-      },
-      {
-        "label": "C",
-        "text": "12"
-      },
-      {
-        "label": "D",
-        "text": "14"
-      }
-    ],
-    "correct_answer": "A",
-    "explanation": "Add or subtract the numbers carefully. The correct answer is 8."
-  },
-  {
     "question_code": "Q2",
     "question_tag": "grade2.math",
     "question_type": "multiple_choice",
@@ -78,32 +26,6 @@
     "explanation": "Add or subtract the numbers carefully. The correct answer is 26."
   },
   {
-    "question_code": "Q3",
-    "question_tag": "grade2.math",
-    "question_type": "multiple_choice",
-    "prompt_text": "48 + 7",
-    "choices": [
-      {
-        "label": "A",
-        "text": "45"
-      },
-      {
-        "label": "B",
-        "text": "50"
-      },
-      {
-        "label": "C",
-        "text": "55"
-      },
-      {
-        "label": "D",
-        "text": "60"
-      }
-    ],
-    "correct_answer": "C",
-    "explanation": "Add or subtract the numbers carefully. The correct answer is 55."
-  },
-  {
     "question_code": "Q1",
     "question_tag": "grade2.math",
     "question_type": "multiple_choice",
@@ -128,5 +50,83 @@
     ],
     "correct_answer": "A",
     "explanation": "Add or subtract the numbers carefully. The correct answer is 50."
+  },
+  {
+    "question_code": "Q3",
+    "question_tag": "grade2.math",
+    "question_type": "multiple_choice",
+    "prompt_text": "48 + 7",
+    "choices": [
+      {
+        "label": "A",
+        "text": "60"
+      },
+      {
+        "label": "B",
+        "text": "55"
+      },
+      {
+        "label": "C",
+        "text": "57"
+      },
+      {
+        "label": "D",
+        "text": "50"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Add or subtract the numbers carefully. The correct answer is 55."
+  },
+  {
+    "question_code": "Q4",
+    "question_tag": "grade2.math",
+    "question_type": "multiple_choice",
+    "prompt_text": "38 + 28",
+    "choices": [
+      {
+        "label": "A",
+        "text": "50"
+      },
+      {
+        "label": "B",
+        "text": "60"
+      },
+      {
+        "label": "C",
+        "text": "66"
+      },
+      {
+        "label": "D",
+        "text": "70"
+      }
+    ],
+    "correct_answer": "C",
+    "explanation": "Add or subtract the numbers carefully. The correct answer is 66."
+  },
+  {
+    "question_code": "Q5",
+    "question_tag": "grade2.math",
+    "question_type": "multiple_choice",
+    "prompt_text": "2 + 6",
+    "choices": [
+      {
+        "label": "A",
+        "text": "4"
+      },
+      {
+        "label": "B",
+        "text": "6"
+      },
+      {
+        "label": "C",
+        "text": "8"
+      },
+      {
+        "label": "D",
+        "text": "10"
+      }
+    ],
+    "correct_answer": "C",
+    "explanation": "Add or subtract the numbers carefully. The correct answer is 8."
   }
 ]

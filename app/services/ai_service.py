@@ -128,7 +128,7 @@ If question_type is free_text, choices must be [] and correct_answer should be t
             "images": images_base64,
             "stream": False,
         },
-        timeout=240,
+        timeout=600,
     )
 
     response.raise_for_status()
@@ -173,3 +173,37 @@ Schema:
   }}
 ]
 """
+
+def validate_questions_with_ollama(questions: list[dict], pdf_text: str):
+    prompt = f"""
+You are validating quiz questions for a child.
+
+Use ONLY this source content:
+
+{pdf_text[:12000]}
+
+Review the quiz questions below.
+Fix any wrong correct_answer values.
+Fix explanations if needed.
+Do not invent content outside the source.
+
+Return ONLY a valid JSON array.
+No markdown.
+No extra text.
+
+Questions:
+{json.dumps(questions, ensure_ascii=False)}
+"""
+
+    response = requests.post(
+        OLLAMA_URL,
+        json={
+            "model": TEXT_MODEL,
+            "prompt": prompt,
+            "stream": False,
+        },
+        timeout=180,
+    )
+
+    response.raise_for_status()
+    return _extract_json_array(response.json()["response"])
