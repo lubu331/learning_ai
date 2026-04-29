@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Learning AI Quiz App</title>
-  <link rel="stylesheet" href="/static/css/style.css?v=3" />
+  <link rel="stylesheet" href="/static/css/style.css?v=4" />
 </head>
 <body>
   <main class="app-shell">
@@ -108,7 +108,13 @@
           <strong id="quizStudentName">Student</strong>
         </div>
 
-        <div class="score-chip" id="scoreDisplay">Score: 0</div>
+        <div class="topbar-actions">
+            <!-- New Report Button -->
+            <button id="openFeedbackModalBtn" class="btn-icon" title="Report an issue with this question">
+                📝
+            </button>
+            <div class="score-chip" id="scoreDisplay">Score: 0</div>
+        </div>
       </header>
 
       <div class="progress-wrap">
@@ -121,83 +127,4 @@
         </div>
       </div>
 
-      <article class="question-card">
-        <div id="questionNumber" class="question-badge">Question 1</div>
-        <h2 id="questionText">Question text</h2>
-
-        <div id="freeTextArea" class="answer-area hidden">
-          <input
-            id="freeTextInput"
-            type="text"
-            placeholder="Type your answer here"
-          />
-          <button id="submitTextAnswerBtn" class="btn-primary">Submit</button>
-        </div>
-
-        <div id="multipleChoiceArea" class="choice-grid hidden"></div>
-
-        <div id="feedbackBox" class="feedback-box hidden">
-          <strong id="feedbackTitle">Feedback</strong>
-          <p id="feedbackText"></p>
-          <p id="correctAnswerText"></p>
-        </div>
-
-        <button id="nextQuestionBtn" class="btn-secondary hidden">
-          Next Question
-        </button>
-
-        <section class="question-report">
-          <h3>Question feedback</h3>
-          <p>Was this question confusing or wrong?</p>
-
-          <div class="report-options">
-            <label>
-              <input type="radio" name="reportReason" value="confusing" />
-              Confusing
-            </label>
-            <label>
-              <input type="radio" name="reportReason" value="wrong_answer" />
-              Wrong answer
-            </label>
-            <label>
-              <input type="radio" name="reportReason" value="typo" />
-              Typo
-            </label>
-            <label>
-              <input type="radio" name="reportReason" value="bad_choices" />
-              Bad choices
-            </label>
-          </div>
-
-          <textarea
-            id="questionReportNote"
-            placeholder="Optional note for parent review"
-          ></textarea>
-
-          <button id="sendQuestionReportBtn" class="btn-report">
-            Send feedback
-          </button>
-
-          <p id="reportStatus" class="report-status"></p>
-        </section>
-      </article>
-    </section>
-
-    <section id="resultsPage" class="page results-page hidden">
-      <div class="results-card">
-        <div class="result-icon">⭐</div>
-        <h2>Quiz finished!</h2>
-        <p id="finalScore">Score: 0/0</p>
-        <p id="finalMessage">Great job practicing today.</p>
-
-        <div id="reviewList" class="review-list"></div>
-
-        <button id="restartBtn" class="btn-primary">Create another quiz</button>
-      </div>
-    </section>
-
-  </main>
-
-  <script src="/static/js/app.js?v=3"></script>
-</body>
-</html>
+      <article class="question

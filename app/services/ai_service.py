@@ -2,7 +2,6 @@ import json
 import re
 import requests
 
-
 OLLAMA_URL = "http://localhost:11434/api/generate"
 
 TEXT_MODEL = "llama3.2:latest"
@@ -18,7 +17,7 @@ def _extract_json_array(text: str):
 
     cleaned = cleaned.replace("```json", "")
     cleaned = cleaned.replace("```", "")
-    cleaned = cleaned.strip()
+    cleaned.strip()
 
     start = cleaned.find("[")
     end = cleaned.rfind("]")
@@ -172,26 +171,62 @@ Schema:
     "explanation": "Short kid-friendly explanation"
   }}
 ]
+
+IMPORTANT RULES FOR SPECIFIC QUESTION TYPES:
+
+1. If the original question asks to 'put in order' or 'sequence', create a multiple-choice question where each choice is a full sequence. One choice MUST be the correct order. Example:
+   - Choice A: Seed, Small plant, Flower, Plant
+   - Choice B: Plant, Seed, Flower, Small plant
+   - etc.
+
+2. If the original question is a 'matching' question (e.g., match situations to outcomes), convert it into a multiple-choice question where the prompt includes ALL the situations, and each choice is a complete set of correct matches. Example:
+   Prompt: "Match each situation to what is happening:
+     1. A bee visits flowers
+     2. A plant makes seeds
+     3. No insects visit the flowers"
+   Choices:
+     A. 1→b, 2→c, 3→a
+     B. 1→a, 2→b, 3→c
+     etc.
+
+3. Never omit the left-hand side (situations, items to order, etc.) from the prompt. Always include them fully.
+
+4. For science/life cycle questions, ensure the correct answer reflects biological accuracy (e.g., seed → small plant → flower → plant).
+
+5. Do NOT invent content. Only use what is in the source text.
 """
 
-def validate_questions_with_ollama(questions: list[dict], pdf_text: str):
-    prompt = f"""
-You are validating quiz questions for a child.
 
-Use ONLY this source content:
+def validate_questions_with_ollama(questions: list[dict], pdf_text: str, subject: str):
+    """
+    Sends generated questions back to Ollama to verify correctness.
+    This is crucial for Science/History where logic matters more than calculation.
+    """
+    prompt = f"""
+You are an expert teacher validating quiz questions for a child.
+
+Subject: {subject}
+
+Use ONLY this source content to verify facts:
 
 {pdf_text[:12000]}
 
 Review the quiz questions below.
-Fix any wrong correct_answer values.
-Fix explanations if needed.
-Do not invent content outside the source.
+1. Check if the 'correct_answer' label actually points to the factually correct choice based on the source text.
+2. If the AI made a mistake (e.g., chose A but B is correct), update the 'correct_answer' field.
+3. Update the 'explanation' to be accurate.
+4. Do NOT change the question text or choices, only fix the answer key and explanation if they are wrong.
 
-Return ONLY a valid JSON array.
+SPECIAL RULES:
+- For ordering questions: Ensure the correct choice lists items in the proper sequence (e.g., seed → small plant → flower → plant).
+- For matching questions: Ensure the correct choice maps each item to its correct partner (e.g., 1→b, 2→c, 3→a).
+- If a question is missing context (e.g., no situations listed in a matching question), rewrite the prompt_text to include all necessary context from the source.
+
+Return ONLY a valid JSON array with the corrected questions.
 No markdown.
 No extra text.
 
-Questions:
+Questions to validate:
 {json.dumps(questions, ensure_ascii=False)}
 """
 

@@ -2,6 +2,8 @@ import json
 import random
 import re
 import shutil
+import os
+from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
@@ -13,6 +15,7 @@ from pydantic import BaseModel
 from app.services.ai_service import (
     generate_questions_from_pdf_images,
     generate_questions_with_ollama,
+    validate_questions_with_ollama,
 )
 from app.services.pdf_service import extract_pdf_text, pdf_to_images_base64
 
@@ -21,9 +24,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_DIR = BASE_DIR / "app" / "static"
 UPLOADS_DIR = BASE_DIR / "uploads"
 GENERATED_DIR = BASE_DIR / "generated_quizzes"
+LOGS_DIR = BASE_DIR / "logs"
 
+# Ensure directories exist
 UPLOADS_DIR.mkdir(exist_ok=True)
 GENERATED_DIR.mkdir(exist_ok=True)
+LOGS_DIR.mkdir(exist_ok=True)
 
 app = FastAPI(title="Learning AI Quiz App")
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
@@ -33,6 +39,12 @@ class AnswerRequest(BaseModel):
     question: dict
     student_answer: str
 
+class FeedbackRequest(BaseModel):
+    question_code: str
+    prompt_text: str
+    reason: str
+    user_note: str = ""
+    timestamp: str = ""
 
 @app.get("/")
 def root():
@@ -258,6 +270,7 @@ async def create_quiz(
     if not pdf_text.strip():
         images = pdf_to_images_base64(pdf_path, max_pages=1)
 
+    # 1. Generate initial questions
     questions = generate_quiz_in_batches(
         pdf_text=pdf_text,
         images=images,
@@ -273,8 +286,22 @@ async def create_quiz(
             detail="Could not generate quiz questions. Check Ollama output.",
         )
 
-    normalized_questions = []
+    # 2. Fix Math Answers specifically
+    questions = fix_math_answers(questions)
 
+    # 3. VALIDATE ALL QUESTIONS (Crucial for Science/History/Logic)
+    print("Validating questions for factual correctness...")
+    try:
+        questions = validate_questions_with_ollama(
+            questions=questions,
+            pdf_text=pdf_text,
+            subject=subject
+        )
+    except Exception as e:
+        print(f"Warning: Validation step failed ({e}), proceeding with generated questions.")
+
+    # 4. Normalize structure
+    normalized_questions = []
     for index, q in enumerate(questions, start=1):
         normalized_questions.append(
             normalize_question(
@@ -286,9 +313,10 @@ async def create_quiz(
             )
         )
 
-    questions = fix_math_answers(normalized_questions)
-    questions = remove_duplicate_questions(questions)
+    # 5. Remove duplicates
+    questions = remove_duplicate_questions(normalized_questions)
 
+    # 6. Shuffle and limit
     random.shuffle(questions)
     questions = questions[:limit]
 
@@ -304,6 +332,30 @@ async def create_quiz(
     }
 
 
+@app.post("/submit-feedback")
+def submit_feedback(request: FeedbackRequest):
+    """
+    Receives feedback from the frontend and logs it to a JSON Lines file.
+    """
+    feedback_entry = {
+        "question_code": request.question_code,
+        "prompt_text": request.prompt_text,
+        "reason": request.reason,
+        "user_note": request.user_note,
+        "timestamp": datetime.now().isoformat()
+    }
+
+    # Ensure logs directory exists
+    LOGS_DIR.mkdir(exist_ok=True)
+    log_file_path = LOGS_DIR / "feedback.jsonl"
+
+    # Append the new feedback entry to the file
+    with open(log_file_path, "a", encoding="utf-8") as f:
+        f.write(json.dumps(feedback_entry) + "\n")
+
+    return {"status": "success", "message": "Feedback received. Thank you!"}
+
+
 @app.post("/answer")
 def submit_answer(request: AnswerRequest):
     question = request.question
@@ -312,11 +364,17 @@ def submit_answer(request: AnswerRequest):
     correct_answer = str(question.get("correct_answer", "")).strip()
     explanation = question.get("explanation", "")
 
-    is_correct = student_answer.lower() == correct_answer.lower()
+    # Handle multiple choice vs free text comparison
+    if question.get("question_type") == "multiple_choice":
+        # For multiple choice, we compare the label (A, B, C, D)
+        is_correct = student_answer.upper() == correct_answer.upper()
+    else:
+        # For free text, we do a simple case-insensitive string match
+        # Note: This is basic. For production, you might want fuzzy matching or AI validation.
+        is_correct = student_answer.lower() == correct_answer.lower()
 
     return {
         "is_correct": is_correct,
         "feedback_text": "Correct!" if is_correct else explanation,
         "correct_answer_summary": f"Correct answer: {correct_answer}",
     }
-

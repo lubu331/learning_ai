@@ -3,13 +3,10 @@ let currentQuestionIndex = 0;
 let score = 0;
 let answerSubmitted = false;
 
+// DOM Elements - Setup Page
 const setupPage = document.getElementById("setupPage");
-const quizPage = document.getElementById("quizPage");
-const resultsPage = document.getElementById("resultsPage");
-
 const startQuizBtn = document.getElementById("startQuizBtn");
 const statusMessage = document.getElementById("statusMessage");
-
 const studentNameInput = document.getElementById("studentName");
 const gradeLevelInput = document.getElementById("gradeLevel");
 const subjectInput = document.getElementById("subject");
@@ -17,9 +14,10 @@ const questionTypeInput = document.getElementById("questionType");
 const limitInput = document.getElementById("limit");
 const fileUpload = document.getElementById("fileUpload");
 const uploadedFiles = document.getElementById("uploadedFiles");
-
 const existingPdfSelect = document.getElementById("existingPdf");
 
+// DOM Elements - Quiz Page
+const quizPage = document.getElementById("quizPage");
 const quizStudentName = document.getElementById("quizStudentName");
 const scoreDisplay = document.getElementById("scoreDisplay");
 const questionCounter = document.getElementById("questionCounter");
@@ -27,22 +25,31 @@ const questionTag = document.getElementById("questionTag");
 const progressFill = document.getElementById("progressFill");
 const questionNumber = document.getElementById("questionNumber");
 const questionText = document.getElementById("questionText");
-
 const freeTextArea = document.getElementById("freeTextArea");
 const freeTextInput = document.getElementById("freeTextInput");
 const submitTextAnswerBtn = document.getElementById("submitTextAnswerBtn");
-
 const multipleChoiceArea = document.getElementById("multipleChoiceArea");
-
 const feedbackBox = document.getElementById("feedbackBox");
 const feedbackTitle = document.getElementById("feedbackTitle");
 const feedbackText = document.getElementById("feedbackText");
 const correctAnswerText = document.getElementById("correctAnswerText");
 const nextQuestionBtn = document.getElementById("nextQuestionBtn");
 
+// DOM Elements - Results Page
+const resultsPage = document.getElementById("resultsPage");
 const finalScore = document.getElementById("finalScore");
 const restartBtn = document.getElementById("restartBtn");
 
+// DOM Elements - Feedback Modal
+const feedbackModal = document.getElementById("feedbackModal");
+const openFeedbackModalBtn = document.getElementById("openFeedbackModalBtn");
+const closeFeedbackModalBtn = document.getElementById("closeFeedbackModalBtn");
+const submitFeedbackBtn = document.getElementById("submitFeedbackBtn");
+const feedbackReasons = document.querySelectorAll(".feedback-reason");
+const feedbackNoteInput = document.getElementById("feedbackNote");
+const feedbackSuccessMsg = document.getElementById("feedbackSuccessMsg");
+
+// Event Listeners
 startQuizBtn.addEventListener("click", loadQuiz);
 submitTextAnswerBtn.addEventListener("click", submitFreeTextAnswer);
 nextQuestionBtn.addEventListener("click", goToNextQuestion);
@@ -50,7 +57,6 @@ restartBtn.addEventListener("click", restartApp);
 
 fileUpload.addEventListener("change", () => {
   uploadedFiles.innerHTML = "";
-
   Array.from(fileUpload.files).forEach((file) => {
     const item = document.createElement("div");
     item.className = "file-pill";
@@ -59,12 +65,32 @@ fileUpload.addEventListener("change", () => {
   });
 });
 
+// Modal Event Listeners
+openFeedbackModalBtn.addEventListener("click", openFeedbackModal);
+closeFeedbackModalBtn.addEventListener("click", closeFeedbackModal);
+submitFeedbackBtn.addEventListener("click", submitFeedback);
+
+// Close modal if clicking outside the card
+feedbackModal.addEventListener("click", (e) => {
+  if (e.target === feedbackModal) {
+    closeFeedbackModal();
+  }
+});
+
+// Reason Selection Logic
+feedbackReasons.forEach((reasonBtn) => {
+  reasonBtn.addEventListener("click", () => {
+    // Remove active class from all
+    feedbackReasons.forEach((btn) => btn.classList.remove("active"));
+    // Add active class to clicked
+    reasonBtn.classList.add("active");
+  });
+});
+
 async function loadExistingPdfs() {
   const response = await fetch("/pdfs");
   const data = await response.json();
-
   existingPdfSelect.innerHTML = `<option value="">Upload a new PDF</option>`;
-
   data.files.forEach((file) => {
     const option = document.createElement("option");
     option.value = file;
@@ -75,7 +101,6 @@ async function loadExistingPdfs() {
 
 async function loadQuiz() {
   const studentName = studentNameInput.value.trim();
-
   if (!studentName) {
     statusMessage.textContent = "Please enter the student name.";
     return;
@@ -145,8 +170,9 @@ function renderQuestion() {
   submitTextAnswerBtn.disabled = false;
 
   questionCounter.textContent = `Question ${current} of ${total}`;
-  questionNumber.textContent = `Question ${current}`;
-  questionTag.textContent = question.question_tag || "";
+  questionNumber.textContent = `Question ${current}`
+
+    questionTag.textContent = question.question_tag || "";
   questionText.textContent = question.prompt_text;
   progressFill.style.width = `${Math.round(((current - 1) / total) * 100)}%`;
 
@@ -169,9 +195,7 @@ function renderQuestion() {
 
 async function submitFreeTextAnswer() {
   const answer = freeTextInput.value.trim();
-
   if (!answer) return;
-
   await submitAnswer(answer);
 }
 
@@ -190,7 +214,6 @@ async function submitAnswer(studentAnswer) {
   });
 
   const result = await response.json();
-
   answerSubmitted = true;
 
   if (result.is_correct) {
@@ -211,12 +234,10 @@ async function submitAnswer(studentAnswer) {
 
 function goToNextQuestion() {
   currentQuestionIndex++;
-
   if (currentQuestionIndex >= quizQuestions.length) {
     showResults();
     return;
   }
-
   renderQuestion();
 }
 
@@ -234,4 +255,18 @@ function restartApp() {
   loadExistingPdfs();
 }
 
-loadExistingPdfs();
+// --- FEEDBACK MODAL LOGIC ---
+
+function openFeedbackModal() {
+  feedbackModal.classList.remove("hidden");
+  feedbackSuccessMsg.classList.add("hidden");
+  submitFeedbackBtn.disabled = false;
+  feedbackNoteInput.value = "";
+
+  // Reset reason selection
+  feedbackReasons.forEach((btn) => btn.classList.remove("active"));
+}
+
+function closeFeedbackModal() {
+  feedbackModal.classList.add("hidden");
+}

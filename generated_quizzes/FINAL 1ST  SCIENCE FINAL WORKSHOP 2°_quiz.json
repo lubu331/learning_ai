@@ -19,51 +19,7 @@
       }
     ],
     "correct_answer": "B",
-    "explanation": "Fossils are the remains or traces of ancient plants and animals."
-  },
-  {
-    "question_code": "Q5",
-    "question_tag": "grade2.science",
-    "question_type": "multiple_choice",
-    "prompt_text": "Where can we find fossils?",
-    "choices": [
-      {
-        "label": "A",
-        "text": "In a bottle of water"
-      },
-      {
-        "label": "B",
-        "text": "In rocks"
-      },
-      {
-        "label": "C",
-        "text": "In our clothes"
-      }
-    ],
-    "correct_answer": "B",
-    "explanation": "Fossils can be found in rocks, especially in places where there has been a lot of digging or erosion."
-  },
-  {
-    "question_code": "Q3",
-    "question_tag": "grade2.science",
-    "question_type": "multiple_choice",
-    "prompt_text": "What helps people grow healthy?",
-    "choices": [
-      {
-        "label": "a",
-        "text": "Eating vegetables and sleeping well"
-      },
-      {
-        "label": "b",
-        "text": "Eating candy every day"
-      },
-      {
-        "label": "c",
-        "text": "Not sleeping"
-      }
-    ],
-    "correct_answer": "a",
-    "explanation": "Eating vegetables and sleeping well helps people grow healthy"
+    "explanation": "A fossil is the remains or traces of a living thing that lived a long time ago."
   },
   {
     "question_code": "Q1",
@@ -85,7 +41,29 @@
       }
     ],
     "correct_answer": "A",
-    "explanation": "Animals grow by eating food, like fruits and vegetables."
+    "explanation": "Animals grow by eating food, like fruits, vegetables, and grains."
+  },
+  {
+    "question_code": "Q9",
+    "question_tag": "grade2.science",
+    "question_type": "multiple_choice",
+    "prompt_text": "What happens if there are no bees?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "Plants grow faster"
+      },
+      {
+        "label": "B",
+        "text": "Plants cannot reproduce easily"
+      },
+      {
+        "label": "C",
+        "text": "Nothing happens"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Without bees, plants would have a harder time reproducing and making new seeds."
   },
   {
     "question_code": "Q2",
@@ -95,15 +73,49 @@
     "choices": [
       {
         "label": "a",
-        "text": "1. Plant, 2. Seed, 3. Flower, 4. Small plant"
+        "text": "Plant"
       },
       {
         "label": "b",
-        "text": "1. Seed, 2. Flower, 3. Small plant, 4. Plant"
+        "text": "Seed"
+      },
+      {
+        "label": "c",
+        "text": "Flower"
+      },
+      {
+        "label": "d",
+        "text": "Small plant"
       }
     ],
-    "correct_answer": "a",
-    "explanation": "The correct order is: Plant, Seed, Flower, Small plant"
+    "correct_answer": "b",
+    "explanation": "The correct order of a life cycle is: Seed, Plant, Flower, Small plant."
+  },
+  {
+    "question_code": "Q10",
+    "question_tag": "grade2.science",
+    "question_type": "multiple_choice",
+    "prompt_text": "Correctly matches the situation with what is happening",
+    "choices": [
+      {
+        "label": "a",
+        "text": "The plant cannot reproduce"
+      },
+      {
+        "label": "b",
+        "text": "Pollination happens"
+      },
+      {
+        "label": "c",
+        "text": "New plants can grow"
+      },
+      {
+        "label": "d",
+        "text": "Insects visit flowers"
+      }
+    ],
+    "correct_answer": "b",
+    "explanation": "When a bee visits a flower, it helps with pollination."
   },
   {
     "question_code": "Q3",
@@ -125,32 +137,28 @@
       }
     ],
     "correct_answer": "a",
-    "explanation": "Eating healthy foods like fruits, vegetables, and whole grains helps our bodies grow strong."
+    "explanation": "Eating healthy foods like vegetables and fruits, and getting enough sleep helps us grow healthy."
   },
   {
-    "question_code": "Q2",
+    "question_code": "Q5",
     "question_tag": "grade2.science",
     "question_type": "multiple_choice",
-    "prompt_text": "What is the correct order of a life cycle?",
+    "prompt_text": "Where can we find fossils?",
     "choices": [
       {
-        "label": "1. Plant",
-        "text": "Plant"
+        "label": "A",
+        "text": "In a bottle of water"
       },
       {
-        "label": "2. Seed",
-        "text": "Seed"
+        "label": "B",
+        "text": "In rocks"
       },
       {
-        "label": "3. Flower",
-        "text": "Flower"
-      },
-      {
-        "label": "4. Small plant",
-        "text": "Small plant"
+        "label": "C",
+        "text": "In our clothes"
       }
     ],
-    "correct_answer": "2",
-    "explanation": "The correct order is: Seed -> Plant -> Flower -> Small plant"
+    "correct_answer": "B",
+    "explanation": "Fossils can be found in rocks, which are formed from the remains of plants and animals."
   }
 ]
