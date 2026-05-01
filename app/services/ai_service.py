@@ -117,6 +117,31 @@ Schema:
 ]
 
 If question_type is free_text, choices must be [] and correct_answer should be the expected answer.
+You are generating quiz questions from a PDF.
+
+Return ONLY a valid JSON array.
+Do not use markdown.
+Do not write explanations outside JSON.
+Do not write "Question 1:".
+Do not wrap the JSON in ```json.
+The response must start with [ and end with ].
+
+Create {limit} questions.
+
+Each item must use this exact structure:
+
+[
+  {{
+    "question": "Question text here",
+    "type": "{question_type}",
+    "choices": ["A", "B", "C", "D"],
+    "answer": "Correct answer here",
+    "explanation": "Short explanation here"
+  }}
+]
+
+PDF text:
+{pdf_text}
 """
 
     response = requests.post(

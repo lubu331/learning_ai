@@ -271,14 +271,18 @@ async def create_quiz(
         images = pdf_to_images_base64(pdf_path, max_pages=1)
 
     # 1. Generate initial questions
-    questions = generate_quiz_in_batches(
-        pdf_text=pdf_text,
-        images=images,
-        grade_level=grade_level,
-        subject=subject,
-        question_type=question_type,
-        limit=limit,
-    )
+    try:
+        questions = generate_quiz_in_batches(
+            pdf_text=pdf_text,
+            images=images,
+            grade=grade_level,
+            subject=subject,
+            question_type=question_type,
+            limit=limit,
+        )
+    except ValueError as e:
+        raise HTTPException(status_code=422, detail=str(e))
+
 
     if not questions:
         raise HTTPException(

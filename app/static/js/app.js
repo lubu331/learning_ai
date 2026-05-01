@@ -152,6 +152,7 @@ async function loadQuiz() {
   } catch (error) {
     console.error(error);
     statusMessage.textContent = "Error generating quiz. Check Ollama and terminal logs.";
+
   }
 }
 
@@ -270,3 +271,7 @@ function openFeedbackModal() {
 function closeFeedbackModal() {
   feedbackModal.classList.add("hidden");
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadExistingPdfs();
+});

@@ -3,128 +3,154 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Learning AI Quiz App</title>
-  <link rel="stylesheet" href="/static/css/style.css?v=4" />
+  <title>Learning AI</title>
+
+  <link rel="stylesheet" href="/static/css/style.css" />
 </head>
+
 <body>
-  <main>
+  <main id="setupPage" class="page">
+    <section class="card">
+      <h1>Learning AI</h1>
+      <h2>Build a quiz from a PDF</h2>
 
-    <section id="setupPage" class="page setup-page">
-      <header class="hero-card">
-        <div>
-          <div class="brand-pill">Learning AI</div>
-          <h1>Build a quiz from a PDF</h1>
-          <p>
-            Upload a lesson PDF or reuse an existing one. Ollama will read it
-            and generate randomized quiz questions.
-          </p>
-        </div>
+      <p>
+        Upload a lesson PDF or reuse an existing one. Ollama will read it and generate randomized quiz questions.
+      </p>
 
-        <div class="hero-art">
-          <div class="circle-icon">📚</div>
-          <div class="mini-card">Smart practice</div>
-          <div class="mini-card orange">Kid friendly</div>
-        </div>
-      </header>
-
-      <section class="setup-grid">
-        <div class="panel">
-          <h2>Quiz setup</h2>
-
-          <label>Student name</label>
-          <input id="studentName" type="text" placeholder="Example: Matti" />
-
-          <label>Grade</label>
-          <select id="gradeLevel">
-            <option value="2" selected>2nd Grade</option>
-            <option value="3">3rd Grade</option>
-            <option value="4">4th Grade</option>
-          </select>
-
-          <label>Topic</label>
-          <select id="subject">
-            <option value="math">Math</option>
-            <option value="sociales">Sociales Colombia</option>
-            <option value="english">English</option>
-            <option value="science">Science</option>
-          </select>
-
-          <label>Question type</label>
-          <select id="questionType">
-            <option value="free_text">Free text answer</option>
-            <option value="multiple_choice">ICFES style / 4 choices</option>
-          </select>
-
-          <label>Amount of questions</label>
-          <select id="limit">
-            <option value="3">3 questions</option>
-            <option value="5" selected>5 questions</option>
-            <option value="10">10 questions</option>
-            <option value="15">15 questions</option>
-            <option value="20">20 questions</option>
-            <option value="50">50 questions</option>
-          </select>
-        </div>
-
-        <div class="panel">
-          <h2>Learning PDF</h2>
-          <p class="muted">
-            Upload a new PDF or select a PDF already stored locally in the app.
-          </p>
-
-          <label>Use existing PDF</label>
-          <select id="existingPdf">
-            <option value="">Upload a new PDF</option>
-          </select>
-
-          <label for="fileUpload" class="upload-box">
-            <span class="upload-icon">⬆️</span>
-            <strong>Click to upload a PDF</strong>
-            <small>Accepted now: PDF only</small>
-          </label>
-
-          <input
-            id="fileUpload"
-            type="file"
-            accept=".pdf"
-            hidden
-          />
-
-          <div id="uploadedFiles" class="file-list"></div>
-        </div>
-      </section>
-
-      <div class="action-row">
-        <button id="startQuizBtn" class="btn-primary">Generate Quiz</button>
+      <div class="badge-row">
+        <span>Smart practice</span>
+        <span>Kid friendly</span>
       </div>
 
-      <p id="statusMessage" class="status-message"></p>
+      <h3>Quiz setup</h3>
+
+      <label for="studentName">Student name</label>
+      <input id="studentName" type="text" placeholder="Student name" />
+
+      <label for="gradeLevel">Grade</label>
+      <select id="gradeLevel">
+        <option value="2">2nd Grade</option>
+        <option value="3">3rd Grade</option>
+        <option value="4">4th Grade</option>
+      </select>
+
+      <label for="subject">Topic</label>
+      <select id="subject">
+        <option value="math">Math</option>
+        <option value="sociales_colombia">Sociales Colombia</option>
+        <option value="english">English</option>
+        <option value="science">Science</option>
+      </select>
+
+      <label for="questionType">Question type</label>
+      <select id="questionType">
+        <option value="multiple_choice">ICFES style / 4 choices</option>
+        <option value="free_text">Free text answer</option>
+      </select>
+
+      <label for="limit">Amount of questions</label>
+      <select id="limit">
+        <option value="3">3 questions</option>
+        <option value="5" selected>5 questions</option>
+        <option value="10">10 questions</option>
+        <option value="15">15 questions</option>
+        <option value="20">20 questions</option>
+        <option value="50">50 questions</option>
+      </select>
+
+      <h3>Learning PDF</h3>
+
+      <p>Upload a new PDF or select a PDF already stored locally in the app.</p>
+
+      <label for="existingPdf">Use existing PDF</label>
+      <select id="existingPdf">
+        <option value="">Upload a new PDF</option>
+      </select>
+
+      <label for="fileUpload">Upload a new PDF</label>
+      <input id="fileUpload" type="file" accept="application/pdf,.pdf" />
+
+      <div id="uploadedFiles"></div>
+
+      <p>Accepted now: PDF only</p>
+
+      <button id="startQuizBtn" type="button">Generate Quiz</button>
+
+      <p id="statusMessage"></p>
     </section>
+  </main>
 
-    <section id="quizPage" class="page quiz-page hidden">
-      <header class="quiz-topbar">
-        <div>
-          <div class="brand-small">Learning AI</div>
-          <strong id="quizStudentName">Student</strong>
-        </div>
+  <main id="quizPage" class="page hidden">
+    <section class="card">
+      <h1>Learning AI</h1>
 
-        <div class="topbar-actions">
-            <!-- New Report Button -->
-            <button id="openFeedbackModalBtn" class="btn-icon" title="Report an issue with this question">
-                📝
-            </button>
-            <div class="score-chip" id="scoreDisplay">Score: 0</div>
-        </div>
-      </header>
-
-      <div class="progress-wrap">
-        <div class="progress-meta">
-          <span id="questionCounter">Question 1 of 5</span>
-          <span id="questionTag">grade2.topic</span>
-        </div>
-        <div class="progress-bar">
-          <div id="progressFill" class="progress-fill"></div>
-        </div>
+      <div>
+        <span id="quizStudentName">Student</span>
+        <span id="scoreDisplay">Score: 0</span>
       </div>
 
-      <article class="question
+      <p id="questionCounter">Question 1 of 5</p>
+      <p id="questionTag">grade2.topic</p>
+
+      <div class="progress">
+        <div id="progressFill"></div>
+      </div>
+
+      <h2 id="questionNumber">Question 1</h2>
+      <p id="questionText"></p>
+
+      <div id="freeTextArea" class="hidden">
+        <textarea id="freeTextInput" placeholder="Write your answer here"></textarea>
+        <button id="submitTextAnswerBtn" type="button">Submit Answer</button>
+      </div>
+
+      <div id="multipleChoiceArea" class="hidden"></div>
+
+      <div id="feedbackBox" class="hidden">
+        <h3 id="feedbackTitle"></h3>
+        <p id="feedbackText"></p>
+        <p id="correctAnswerText"></p>
+      </div>
+
+      <button id="nextQuestionBtn" type="button" class="hidden">Next Question</button>
+      <button id="openFeedbackModalBtn" type="button">Report question issue</button>
+    </section>
+  </main>
+
+  <main id="resultsPage" class="page hidden">
+    <section class="card">
+      <h1>Quiz finished</h1>
+      <p id="finalScore">Score: 0/0</p>
+      <button id="restartBtn" type="button">Start Again</button>
+    </section>
+  </main>
+
+  <div id="feedbackModal" class="modal hidden">
+    <div class="modal-card">
+      <h2>Question feedback</h2>
+
+      <button class="feedback-reason" type="button" data-reason="wrong_answer">
+        Wrong answer
+      </button>
+
+      <button class="feedback-reason" type="button" data-reason="unclear_question">
+        Unclear question
+      </button>
+
+      <button class="feedback-reason" type="button" data-reason="bad_explanation">
+        Bad explanation
+      </button>
+
+      <textarea id="feedbackNote" placeholder="Add a note"></textarea>
+
+      <p id="feedbackSuccessMsg" class="hidden">Feedback sent.</p>
+
+      <button id="submitFeedbackBtn" type="button">Submit Feedback</button>
+      <button id="closeFeedbackModalBtn" type="button">Close</button>
+    </div>
+  </div>
+
+  <script src="/static/js/app.js?v=6"></script>
+</body>
+</html>
