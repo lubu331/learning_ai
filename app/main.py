@@ -53,7 +53,16 @@ def root():
 
 @app.get("/pdfs")
 def list_pdfs():
-    files = sorted([p.name for p in UPLOADS_DIR.glob("*.pdf")])
+    files = [
+        {
+            "name": p.name,
+            "size_bytes": p.stat().st_size,
+            "modified_at": datetime.fromtimestamp(p.stat().st_mtime).isoformat(),
+        }
+        for p in UPLOADS_DIR.glob("*")
+        if p.is_file() and p.suffix.lower() == ".pdf"
+    ]
+    files.sort(key=lambda item: item["modified_at"], reverse=True)
     return {"files": files}
 
 
@@ -101,7 +110,11 @@ def fix_math_answers(questions: list[dict]):
 
             if not found:
                 q["choices"] = build_math_choices(correct)
-                q["correct_answer"] = "A"
+
+                for choice in q["choices"]:
+                    if str(choice.get("text", "")).strip() == str(correct):
+                        q["correct_answer"] = choice.get("label")
+                        break
 
         else:
             q["correct_answer"] = str(correct)
@@ -275,7 +288,7 @@ async def create_quiz(
         questions = generate_quiz_in_batches(
             pdf_text=pdf_text,
             images=images,
-            grade=grade_level,
+            grade_level=grade_level,
             subject=subject,
             question_type=question_type,
             limit=limit,
@@ -290,10 +303,7 @@ async def create_quiz(
             detail="Could not generate quiz questions. Check Ollama output.",
         )
 
-    # 2. Fix Math Answers specifically
-    questions = fix_math_answers(questions)
-
-    # 3. VALIDATE ALL QUESTIONS (Crucial for Science/History/Logic)
+    # 2. Validate all non-math logic/facts with Ollama.
     print("Validating questions for factual correctness...")
     try:
         questions = validate_questions_with_ollama(
@@ -303,6 +313,9 @@ async def create_quiz(
         )
     except Exception as e:
         print(f"Warning: Validation step failed ({e}), proceeding with generated questions.")
+
+    # 3. Keep deterministic arithmetic as the final authority.
+    questions = fix_math_answers(questions)
 
     # 4. Normalize structure
     normalized_questions = []

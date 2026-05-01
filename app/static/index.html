@@ -5,87 +5,152 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Learning AI</title>
 
-  <link rel="stylesheet" href="/static/css/style.css" />
+  <link rel="stylesheet" href="/static/css/style.css?v=9" />
 </head>
 
 <body>
-  <main id="setupPage" class="page">
-    <section class="card">
-      <h1>Learning AI</h1>
-      <h2>Build a quiz from a PDF</h2>
+  <main id="setupPage" class="page setup-page">
+    <header class="site-nav" aria-label="Main navigation">
+      <div class="brand-mark">
+        <span class="brand-spark">L</span>
+        <span>Learning AI</span>
+      </div>
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#quizSetupForm">Setup</a>
+        <a href="#worksheetLibrary">Worksheets</a>
+        <a href="#startQuizBtn">Practice</a>
+      </nav>
+      <a class="nav-action" href="#quizSetupForm">Start now</a>
+    </header>
 
-      <p>
-        Upload a lesson PDF or reuse an existing one. Ollama will read it and generate randomized quiz questions.
-      </p>
-
-      <div class="badge-row">
-        <span>Smart practice</span>
-        <span>Kid friendly</span>
+    <section class="setup-hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Worksheet to quiz studio</p>
+        <h1>Best <span>quiz</span> for your child's practice</h1>
+        <p class="hero-text">
+          Reuse saved PDFs, upload new homework sheets, and turn them into bright practice quizzes with local AI.
+        </p>
+        <div class="hero-actions">
+          <a class="hero-button primary-hero" href="#quizSetupForm">Build quiz</a>
+          <a class="hero-button secondary-hero" href="#worksheetLibrary">Pick PDF</a>
+        </div>
       </div>
 
-      <h3>Quiz setup</h3>
+      <div class="worksheet-stack" aria-hidden="true">
+        <div class="sun-disc"></div>
+        <div class="student-illustration">
+          <span class="student-hair"></span>
+          <span class="student-face"></span>
+          <span class="student-glasses left-lens"></span>
+          <span class="student-glasses right-lens"></span>
+          <span class="student-smile"></span>
+          <span class="student-shirt"></span>
+          <span class="student-book"></span>
+        </div>
+        <span class="float-icon cap-icon">A+</span>
+        <span class="float-icon clock-icon">10</span>
+        <span class="float-icon ball-icon"></span>
+      </div>
+    </section>
 
-      <label for="studentName">Student name</label>
-      <input id="studentName" type="text" placeholder="Student name" />
+    <section class="setup-grid">
+      <form class="setup-panel" id="quizSetupForm">
+        <div class="section-heading">
+          <p class="eyebrow">Student card</p>
+          <h2>Quiz Setup</h2>
+        </div>
 
-      <label for="gradeLevel">Grade</label>
-      <select id="gradeLevel">
-        <option value="2">2nd Grade</option>
-        <option value="3">3rd Grade</option>
-        <option value="4">4th Grade</option>
-      </select>
+        <div class="field full">
+          <label for="studentName">Student name</label>
+          <input id="studentName" type="text" placeholder="Type a name" />
+        </div>
 
-      <label for="subject">Topic</label>
-      <select id="subject">
-        <option value="math">Math</option>
-        <option value="sociales_colombia">Sociales Colombia</option>
-        <option value="english">English</option>
-        <option value="science">Science</option>
-      </select>
+        <div class="field">
+          <label for="gradeLevel">Grade</label>
+          <select id="gradeLevel">
+            <option value="2">2nd Grade</option>
+            <option value="3">3rd Grade</option>
+            <option value="4">4th Grade</option>
+          </select>
+        </div>
 
-      <label for="questionType">Question type</label>
-      <select id="questionType">
-        <option value="multiple_choice">ICFES style / 4 choices</option>
-        <option value="free_text">Free text answer</option>
-      </select>
+        <div class="field">
+          <label for="subject">Topic</label>
+          <select id="subject">
+            <option value="math">Math</option>
+            <option value="sociales_colombia">Sociales Colombia</option>
+            <option value="english">English</option>
+            <option value="science">Science</option>
+          </select>
+        </div>
 
-      <label for="limit">Amount of questions</label>
-      <select id="limit">
-        <option value="3">3 questions</option>
-        <option value="5" selected>5 questions</option>
-        <option value="10">10 questions</option>
-        <option value="15">15 questions</option>
-        <option value="20">20 questions</option>
-        <option value="50">50 questions</option>
-      </select>
+        <div class="subject-strip full" aria-hidden="true">
+          <span class="subject-chip chip-math">Math</span>
+          <span class="subject-chip chip-science">Science</span>
+          <span class="subject-chip chip-english">English</span>
+          <span class="subject-chip chip-social">Sociales</span>
+        </div>
 
-      <h3>Learning PDF</h3>
+        <div class="field">
+          <label for="questionType">Question style</label>
+          <select id="questionType">
+            <option value="multiple_choice">ICFES style / 4 choices</option>
+            <option value="free_text">Free text answer</option>
+          </select>
+        </div>
 
-      <p>Upload a new PDF or select a PDF already stored locally in the app.</p>
+        <div class="field">
+          <label for="limit">Question count</label>
+          <select id="limit">
+            <option value="3">3 questions</option>
+            <option value="5" selected>5 questions</option>
+            <option value="10">10 questions</option>
+            <option value="15">15 questions</option>
+            <option value="20">20 questions</option>
+            <option value="50">50 questions</option>
+          </select>
+        </div>
 
-      <label for="existingPdf">Use existing PDF</label>
-      <select id="existingPdf">
-        <option value="">Upload a new PDF</option>
-      </select>
+        <button id="startQuizBtn" class="primary-action" type="button">Start Practice</button>
+        <p id="statusMessage" class="status-message"></p>
+      </form>
 
-      <label for="fileUpload">Upload a new PDF</label>
-      <input id="fileUpload" type="file" accept="application/pdf,.pdf" />
+      <section class="library-panel" id="worksheetLibrary">
+        <div class="section-heading">
+          <p class="eyebrow">Worksheet shelf</p>
+          <h2>Worksheet Library</h2>
+        </div>
 
-      <div id="uploadedFiles"></div>
+        <p class="helper-text">Choose a saved PDF or upload a new worksheet. Saved files stay available for future practice.</p>
 
-      <p>Accepted now: PDF only</p>
+        <label class="upload-drop" for="fileUpload">
+          <span class="upload-title">Add worksheet PDF</span>
+          <span class="upload-subtitle">One PDF at a time</span>
+          <input id="fileUpload" type="file" accept="application/pdf,.pdf" />
+        </label>
 
-      <button id="startQuizBtn" type="button">Generate Quiz</button>
+        <div id="uploadedFiles" class="picked-files"></div>
 
-      <p id="statusMessage"></p>
+        <div class="library-header">
+          <span>Saved PDFs</span>
+          <button id="refreshPdfBtn" class="ghost-action" type="button">Refresh</button>
+        </div>
+
+        <label class="sr-only" for="existingPdf">Use existing PDF</label>
+        <select id="existingPdf" class="saved-pdf-select">
+          <option value="">Upload a new PDF</option>
+        </select>
+
+        <div id="pdfLibrary" class="pdf-library" aria-live="polite"></div>
+      </section>
     </section>
   </main>
 
-  <main id="quizPage" class="page hidden">
-    <section class="card">
+  <main id="quizPage" class="page quiz-page hidden">
+    <section class="quiz-card">
       <h1>Learning AI</h1>
 
-      <div>
+      <div class="quiz-topline">
         <span id="quizStudentName">Student</span>
         <span id="scoreDisplay">Score: 0</span>
       </div>
@@ -102,7 +167,7 @@
 
       <div id="freeTextArea" class="hidden">
         <textarea id="freeTextInput" placeholder="Write your answer here"></textarea>
-        <button id="submitTextAnswerBtn" type="button">Submit Answer</button>
+        <button id="submitTextAnswerBtn" class="primary-action" type="button">Submit Answer</button>
       </div>
 
       <div id="multipleChoiceArea" class="hidden"></div>
@@ -113,16 +178,16 @@
         <p id="correctAnswerText"></p>
       </div>
 
-      <button id="nextQuestionBtn" type="button" class="hidden">Next Question</button>
-      <button id="openFeedbackModalBtn" type="button">Report question issue</button>
+      <button id="nextQuestionBtn" class="primary-action hidden" type="button">Next Question</button>
+      <button id="openFeedbackModalBtn" class="ghost-action" type="button">Report question issue</button>
     </section>
   </main>
 
-  <main id="resultsPage" class="page hidden">
-    <section class="card">
+  <main id="resultsPage" class="page results-page hidden">
+    <section class="quiz-card">
       <h1>Quiz finished</h1>
       <p id="finalScore">Score: 0/0</p>
-      <button id="restartBtn" type="button">Start Again</button>
+      <button id="restartBtn" class="primary-action" type="button">Start Again</button>
     </section>
   </main>
 
@@ -146,11 +211,11 @@
 
       <p id="feedbackSuccessMsg" class="hidden">Feedback sent.</p>
 
-      <button id="submitFeedbackBtn" type="button">Submit Feedback</button>
-      <button id="closeFeedbackModalBtn" type="button">Close</button>
+      <button id="submitFeedbackBtn" class="primary-action" type="button">Submit Feedback</button>
+      <button id="closeFeedbackModalBtn" class="ghost-action" type="button">Close</button>
     </div>
   </div>
 
-  <script src="/static/js/app.js?v=6"></script>
+  <script src="/static/js/app.js?v=9"></script>
 </body>
 </html>
