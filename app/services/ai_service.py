@@ -6,6 +6,34 @@ OLLAMA_URL = "http://localhost:11434/api/generate"
 
 TEXT_MODEL = "llama3.2:latest"
 VISION_MODEL = "llama3.2-vision:latest"
+TEXT_TIMEOUT_SECONDS = 180
+VISION_TIMEOUT_SECONDS = 600
+MAX_PDF_TEXT_CHARS = 6000
+
+
+class OllamaServiceError(RuntimeError):
+    pass
+
+
+def _post_to_ollama(payload: dict, timeout: int):
+    try:
+        response = requests.post(
+            OLLAMA_URL,
+            json=payload,
+            timeout=timeout,
+        )
+        response.raise_for_status()
+        return response
+    except requests.exceptions.Timeout as e:
+        raise OllamaServiceError(
+            f"Ollama timed out after {timeout} seconds. Try fewer questions, a shorter PDF, or make sure Ollama is not overloaded."
+        ) from e
+    except requests.exceptions.ConnectionError as e:
+        raise OllamaServiceError(
+            "Could not connect to Ollama at localhost:11434. Make sure Ollama is running."
+        ) from e
+    except requests.exceptions.RequestException as e:
+        raise OllamaServiceError(f"Ollama request failed: {e}") from e
 
 
 def _extract_json_array(text: str):
@@ -42,22 +70,21 @@ def generate_questions_with_ollama(
     pdf_text: str,
     grade_level: str,
     subject: str,
+    topic: str,
     question_type: str,
     limit: int,
 ):
-    prompt = _build_quiz_prompt(pdf_text, grade_level, subject, question_type, limit)
+    prompt = _build_quiz_prompt(pdf_text, grade_level, subject, topic, question_type, limit)
 
-    response = requests.post(
-        OLLAMA_URL,
-        json={
+    response = _post_to_ollama(
+        {
             "model": TEXT_MODEL,
             "prompt": prompt,
             "stream": False,
         },
-        timeout=180,
+        timeout=TEXT_TIMEOUT_SECONDS,
     )
 
-    response.raise_for_status()
     return _extract_json_array(response.json()["response"])
 
 
@@ -65,6 +92,7 @@ def generate_questions_from_pdf_images(
     images_base64: list[str],
     grade_level: str,
     subject: str,
+    topic: str,
     question_type: str,
     limit: int,
 ):
@@ -74,6 +102,7 @@ For math questions, make sure the correct_answer matches the real calculated ans
 For multiple_choice, correct_answer must be the label of the option with the correct number.
 Grade: {grade_level}
 Subject: {subject}
+Topic/skill: {topic}
 Question type: {question_type}
 Number of questions: {limit}
 
@@ -103,6 +132,7 @@ Schema:
   {{
     "question_code": "Q1",
     "question_tag": "grade{grade_level}.{subject}",
+    "topic": "{topic}",
     "question_type": "{question_type}",
     "prompt_text": "Question text here",
     "choices": [
@@ -117,39 +147,44 @@ Schema:
 ]
 
 If question_type is free_text, choices must be [] and correct_answer should be the expected answer.
+If subject is math, include an "operation" field such as "5 - 3" or "8 + 4" so the app can verify the answer with code.
+For math word problems, write genuine short Grade {grade_level} stories, for example: "My father had 5 apples and gave 3 to my brother. How many apples does my father have left?"
 Create {limit} questions.
 """
 
-    response = requests.post(
-        OLLAMA_URL,
-        json={
+    response = _post_to_ollama(
+        {
             "model": VISION_MODEL,
             "prompt": prompt,
             "images": images_base64,
             "stream": False,
         },
-        timeout=600,
+        timeout=VISION_TIMEOUT_SECONDS,
     )
 
-    response.raise_for_status()
     return _extract_json_array(response.json()["response"])
 
 
-def _build_quiz_prompt(pdf_text, grade_level, subject, question_type, limit):
+def _build_quiz_prompt(pdf_text, grade_level, subject, topic, question_type, limit):
     return f"""
 Create a quiz for a child.
 
 Grade: {grade_level}
 Subject: {subject}
+Topic/skill: {topic}
 Question type: {question_type}
 Number of questions: {limit}
 
 For math questions, make sure the correct_answer matches the real calculated answer.
 For multiple_choice, correct_answer must be the label of the option with the correct number.
+If subject is math, include an "operation" field such as "5 - 3" or "8 + 4" so the app can verify the answer with code.
+For math word problems, write genuine short Grade {grade_level} stories, for example: "My father had 5 apples and gave 3 to my brother. How many apples does my father have left?"
+For English language arts, keep text readable for Grade {grade_level} and ask about the selected topic/skill.
+For Sociales Colombia, keep facts age-appropriate and focused on Colombia, geography, history, culture, or civic behavior.
 
 Use ONLY this content:
 
-{pdf_text[:12000]}
+{pdf_text[:MAX_PDF_TEXT_CHARS]}
 
 Return ONLY a valid JSON array.
 No markdown.
@@ -160,6 +195,7 @@ Schema:
   {{
     "question_code": "Q1",
     "question_tag": "grade{grade_level}.{subject}",
+    "topic": "{topic}",
     "question_type": "{question_type}",
     "prompt_text": "Question text here",
     "choices": [
@@ -198,7 +234,7 @@ IMPORTANT RULES FOR SPECIFIC QUESTION TYPES:
 """
 
 
-def validate_questions_with_ollama(questions: list[dict], pdf_text: str, subject: str):
+def validate_questions_with_ollama(questions: list[dict], pdf_text: str, subject: str, topic: str = "general"):
     """
     Sends generated questions back to Ollama to verify correctness.
     This is crucial for Science/History where logic matters more than calculation.
@@ -207,10 +243,11 @@ def validate_questions_with_ollama(questions: list[dict], pdf_text: str, subject
 You are an expert teacher validating quiz questions for a child.
 
 Subject: {subject}
+Topic/skill: {topic}
 
 Use ONLY this source content to verify facts:
 
-{pdf_text[:12000]}
+{pdf_text[:MAX_PDF_TEXT_CHARS]}
 
 Review the quiz questions below.
 1. Check if the 'correct_answer' label actually points to the factually correct choice based on the source text.
@@ -231,15 +268,13 @@ Questions to validate:
 {json.dumps(questions, ensure_ascii=False)}
 """
 
-    response = requests.post(
-        OLLAMA_URL,
-        json={
+    response = _post_to_ollama(
+        {
             "model": TEXT_MODEL,
             "prompt": prompt,
             "stream": False,
         },
-        timeout=180,
+        timeout=TEXT_TIMEOUT_SECONDS,
     )
 
-    response.raise_for_status()
     return _extract_json_array(response.json()["response"])

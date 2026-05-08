@@ -3,6 +3,7 @@ let currentQuestionIndex = 0;
 let score = 0;
 let answerSubmitted = false;
 let savedPdfFiles = [];
+let curriculumTopics = {};
 
 // DOM Elements - Setup Page
 const setupPage = document.getElementById("setupPage");
@@ -11,6 +12,7 @@ const statusMessage = document.getElementById("statusMessage");
 const studentNameInput = document.getElementById("studentName");
 const gradeLevelInput = document.getElementById("gradeLevel");
 const subjectInput = document.getElementById("subject");
+const topicInput = document.getElementById("topic");
 const questionTypeInput = document.getElementById("questionType");
 const limitInput = document.getElementById("limit");
 const fileUpload = document.getElementById("fileUpload");
@@ -58,6 +60,7 @@ submitTextAnswerBtn.addEventListener("click", submitFreeTextAnswer);
 nextQuestionBtn.addEventListener("click", goToNextQuestion);
 restartBtn.addEventListener("click", restartApp);
 refreshPdfBtn.addEventListener("click", loadExistingPdfs);
+subjectInput.addEventListener("change", renderTopicOptions);
 existingPdfSelect.addEventListener("change", () => {
   if (existingPdfSelect.value) {
     fileUpload.value = "";
@@ -129,6 +132,60 @@ async function loadExistingPdfs() {
   } catch (error) {
     console.error(error);
     pdfLibrary.innerHTML = `<p class="library-error">Could not load saved PDFs. Check the server console.</p>`;
+  }
+}
+
+async function loadCurriculum() {
+  try {
+    const response = await fetch("/curriculum");
+
+    if (!response.ok) {
+      throw new Error("Could not load curriculum topics.");
+    }
+
+    const data = await response.json();
+    curriculumTopics = data.subjects || {};
+  } catch (error) {
+    console.error(error);
+    curriculumTopics = {
+      math: [
+        {id: "addition", label: "Addition"},
+        {id: "subtraction", label: "Subtraction"},
+        {id: "word_problems", label: "Word problems"},
+      ],
+      english: [
+        {id: "reading_comprehension", label: "Reading comprehension"},
+        {id: "vocabulary", label: "Vocabulary"},
+        {id: "grammar", label: "Grammar"},
+        {id: "sentence_writing", label: "Sentence writing"},
+      ],
+      sociales_colombia: [
+        {id: "colombian_geography", label: "Colombian geography"},
+        {id: "colombian_history", label: "Colombian history"},
+        {id: "civic_behavior", label: "Civic behavior and society"},
+      ],
+    };
+  }
+
+  renderTopicOptions();
+}
+
+function renderTopicOptions() {
+  const topics = curriculumTopics[subjectInput.value] || [];
+  topicInput.innerHTML = "";
+
+  topics.forEach((topic) => {
+    const option = document.createElement("option");
+    option.value = topic.id;
+    option.textContent = topic.label;
+    topicInput.appendChild(option);
+  });
+
+  if (!topics.length) {
+    const option = document.createElement("option");
+    option.value = "general";
+    option.textContent = "General practice";
+    topicInput.appendChild(option);
   }
 }
 
@@ -223,6 +280,7 @@ async function loadQuiz() {
   const formData = new FormData();
   formData.append("grade_level", gradeLevelInput.value);
   formData.append("subject", subjectInput.value);
+  formData.append("topic", topicInput.value);
   formData.append("question_type", questionTypeInput.value);
   formData.append("limit", limitInput.value);
 
@@ -265,7 +323,7 @@ async function loadQuiz() {
     renderQuestion();
   } catch (error) {
     console.error(error);
-    statusMessage.textContent = "Error generating quiz. Check Ollama and terminal logs.";
+    statusMessage.textContent = "Could not reach the quiz generator. Make sure Ollama is running and try fewer questions.";
 
   }
 }
@@ -425,5 +483,6 @@ async function submitFeedback() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+  loadCurriculum();
   loadExistingPdfs();
 });

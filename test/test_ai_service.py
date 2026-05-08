@@ -1,4 +1,11 @@
-from app.services.ai_service import generate_questions_from_pdf_images
+import pytest
+import requests
+
+from app.services.ai_service import (
+    OllamaServiceError,
+    generate_questions_from_pdf_images,
+    generate_questions_with_ollama,
+)
 
 
 def test_generate_questions_from_pdf_images_uses_images_without_pdf_text(monkeypatch):
@@ -40,10 +47,29 @@ def test_generate_questions_from_pdf_images_uses_images_without_pdf_text(monkeyp
         images_base64=["fake-image-data"],
         grade_level="2",
         subject="math",
+        topic="word_problems",
         question_type="multiple_choice",
         limit=1,
     )
 
     assert questions[0]["prompt_text"] == "2 + 2"
     assert captured_payload["json"]["images"] == ["fake-image-data"]
+    assert "Topic/skill: word_problems" in captured_payload["json"]["prompt"]
     assert "PDF text:" not in captured_payload["json"]["prompt"]
+
+
+def test_generate_questions_with_ollama_raises_clear_timeout(monkeypatch):
+    def fake_post(*_args, **_kwargs):
+        raise requests.exceptions.Timeout("slow model")
+
+    monkeypatch.setattr("app.services.ai_service.requests.post", fake_post)
+
+    with pytest.raises(OllamaServiceError, match="timed out"):
+        generate_questions_with_ollama(
+            pdf_text="2 + 2",
+            grade_level="2",
+            subject="math",
+            topic="addition",
+            question_type="multiple_choice",
+            limit=1,
+        )

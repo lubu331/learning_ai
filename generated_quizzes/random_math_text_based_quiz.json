@@ -1,33 +1,252 @@
 [
   {
+    "question_code": "Q5",
+    "question_tag": "grade2.math",
+    "topic": "addition",
+    "question_type": "multiple_choice",
+    "prompt_text": "2 + 6",
+    "choices": [
+      {
+        "label": "A",
+        "text": "8"
+      },
+      {
+        "label": "B",
+        "text": "6"
+      },
+      {
+        "label": "C",
+        "text": "4"
+      },
+      {
+        "label": "D",
+        "text": "5"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 2 + 6. The correct answer is 8.",
+    "operation": "2 + 6",
+    "grade_level": "2",
+    "subject": "math",
+    "validation_status": "validated"
+  },
+  {
     "question_code": "Q2",
     "question_tag": "grade2.math",
+    "topic": "addition",
     "question_type": "multiple_choice",
     "prompt_text": "41 - 15",
     "choices": [
       {
         "label": "A",
-        "text": "24"
+        "text": "20"
       },
       {
         "label": "B",
-        "text": "26"
+        "text": "22"
       },
       {
         "label": "C",
-        "text": "28"
+        "text": "24"
+      },
+      {
+        "label": "D",
+        "text": "26"
+      }
+    ],
+    "correct_answer": "D",
+    "explanation": "Use the operation 41 - 15. The correct answer is 26.",
+    "operation": "41 - 15",
+    "grade_level": "2",
+    "subject": "math",
+    "validation_status": "validated"
+  },
+  {
+    "question_code": "Q5",
+    "question_tag": "grade2.math",
+    "topic": "addition",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is the sum of 2 and 6?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "8"
+      },
+      {
+        "label": "B",
+        "text": "6"
+      },
+      {
+        "label": "C",
+        "text": "4"
+      },
+      {
+        "label": "D",
+        "text": "5"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Add 2 and 6 to find the answer.",
+    "grade_level": "2",
+    "subject": "math",
+    "validation_status": "validated"
+  },
+  {
+    "question_code": "Q1",
+    "question_tag": "grade2.math",
+    "topic": "addition",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is the sum of 2 and 48?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "50"
+      },
+      {
+        "label": "B",
+        "text": "51"
+      },
+      {
+        "label": "C",
+        "text": "52"
+      },
+      {
+        "label": "D",
+        "text": "53"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "When we add 2 and 48, we get 50.",
+    "grade_level": "2",
+    "subject": "math",
+    "validation_status": "validated"
+  },
+  {
+    "question_code": "Q2",
+    "question_tag": "grade2.math",
+    "topic": "addition",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is the result of subtracting 15 from 41?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "20"
+      },
+      {
+        "label": "B",
+        "text": "25"
+      },
+      {
+        "label": "C",
+        "text": "26"
       },
       {
         "label": "D",
         "text": "30"
       }
     ],
-    "correct_answer": "B",
-    "explanation": "Add or subtract the numbers carefully. The correct answer is 26."
+    "correct_answer": "C",
+    "explanation": "When we subtract 15 from 41, we get 26.",
+    "grade_level": "2",
+    "subject": "math",
+    "validation_status": "validated"
+  },
+  {
+    "question_code": "Q4",
+    "question_tag": "grade2.math",
+    "topic": "addition",
+    "question_type": "multiple_choice",
+    "prompt_text": "38 + 28",
+    "choices": [
+      {
+        "label": "A",
+        "text": "60"
+      },
+      {
+        "label": "B",
+        "text": "62"
+      },
+      {
+        "label": "C",
+        "text": "65"
+      },
+      {
+        "label": "D",
+        "text": "66"
+      }
+    ],
+    "correct_answer": "D",
+    "explanation": "Use the operation 38 + 28. The correct answer is 66.",
+    "operation": "38 + 28",
+    "grade_level": "2",
+    "subject": "math",
+    "validation_status": "validated"
+  },
+  {
+    "question_code": "Q3",
+    "question_tag": "grade2.math",
+    "topic": "addition",
+    "question_type": "multiple_choice",
+    "prompt_text": "48 + 7",
+    "choices": [
+      {
+        "label": "A",
+        "text": "50"
+      },
+      {
+        "label": "B",
+        "text": "51"
+      },
+      {
+        "label": "C",
+        "text": "52"
+      },
+      {
+        "label": "D",
+        "text": "55"
+      }
+    ],
+    "correct_answer": "D",
+    "explanation": "Use the operation 48 + 7. The correct answer is 55.",
+    "operation": "48 + 7",
+    "grade_level": "2",
+    "subject": "math",
+    "validation_status": "validated"
+  },
+  {
+    "question_code": "Q3",
+    "question_tag": "grade2.math",
+    "topic": "addition",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is the sum of 48 and 7?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "50"
+      },
+      {
+        "label": "B",
+        "text": "51"
+      },
+      {
+        "label": "C",
+        "text": "52"
+      },
+      {
+        "label": "D",
+        "text": "55"
+      }
+    ],
+    "correct_answer": "D",
+    "explanation": "When we add 48 and 7, we get 55.",
+    "grade_level": "2",
+    "subject": "math",
+    "validation_status": "validated"
   },
   {
     "question_code": "Q1",
     "question_tag": "grade2.math",
+    "topic": "addition",
     "question_type": "multiple_choice",
     "prompt_text": "2 + 48",
     "choices": [
@@ -49,84 +268,40 @@
       }
     ],
     "correct_answer": "A",
-    "explanation": "Add or subtract the numbers carefully. The correct answer is 50."
-  },
-  {
-    "question_code": "Q3",
-    "question_tag": "grade2.math",
-    "question_type": "multiple_choice",
-    "prompt_text": "48 + 7",
-    "choices": [
-      {
-        "label": "A",
-        "text": "60"
-      },
-      {
-        "label": "B",
-        "text": "55"
-      },
-      {
-        "label": "C",
-        "text": "57"
-      },
-      {
-        "label": "D",
-        "text": "50"
-      }
-    ],
-    "correct_answer": "A",
-    "explanation": "Add or subtract the numbers carefully. The correct answer is 55."
+    "explanation": "Use the operation 2 + 48. The correct answer is 50.",
+    "operation": "2 + 48",
+    "grade_level": "2",
+    "subject": "math",
+    "validation_status": "validated"
   },
   {
     "question_code": "Q4",
     "question_tag": "grade2.math",
+    "topic": "addition",
     "question_type": "multiple_choice",
-    "prompt_text": "38 + 28",
+    "prompt_text": "What is the sum of 38 and 28?",
     "choices": [
       {
         "label": "A",
-        "text": "50"
-      },
-      {
-        "label": "B",
         "text": "60"
       },
       {
-        "label": "C",
-        "text": "66"
-      },
-      {
-        "label": "D",
-        "text": "70"
-      }
-    ],
-    "correct_answer": "C",
-    "explanation": "Add or subtract the numbers carefully. The correct answer is 66."
-  },
-  {
-    "question_code": "Q5",
-    "question_tag": "grade2.math",
-    "question_type": "multiple_choice",
-    "prompt_text": "2 + 6",
-    "choices": [
-      {
-        "label": "A",
-        "text": "4"
-      },
-      {
         "label": "B",
-        "text": "6"
+        "text": "62"
       },
       {
         "label": "C",
-        "text": "8"
+        "text": "65"
       },
       {
         "label": "D",
-        "text": "10"
+        "text": "66"
       }
     ],
-    "correct_answer": "C",
-    "explanation": "Add or subtract the numbers carefully. The correct answer is 8."
+    "correct_answer": "D",
+    "explanation": "When we add 38 and 28, we get 66.",
+    "grade_level": "2",
+    "subject": "math",
+    "validation_status": "validated"
   }
 ]

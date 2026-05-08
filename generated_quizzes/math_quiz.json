@@ -1,39 +1,65 @@
 [
   {
-    "question_code": "Q2",
+    "question_code": "Q3",
     "question_tag": "grade2.math",
     "question_type": "multiple_choice",
-    "prompt_text": "9 - 3 = ?",
+    "prompt_text": "8 - 5",
     "choices": [
       {
         "label": "A",
-        "text": "5"
+        "text": "3"
       },
       {
         "label": "B",
-        "text": "6"
+        "text": "4"
       },
       {
         "label": "C",
-        "text": "7"
+        "text": "5"
       },
       {
         "label": "D",
-        "text": "8"
+        "text": "6"
       }
     ],
-    "correct_answer": "B",
-    "explanation": "Add/subtract the numbers carefully. The correct answer is 6."
+    "correct_answer": "A",
+    "explanation": "Add or subtract the numbers carefully. The correct answer is 3."
+  },
+  {
+    "question_code": "Q2",
+    "question_tag": "grade2.math",
+    "question_type": "multiple_choice",
+    "prompt_text": "9 - 3",
+    "choices": [
+      {
+        "label": "A",
+        "text": "6"
+      },
+      {
+        "label": "B",
+        "text": "7"
+      },
+      {
+        "label": "C",
+        "text": "8"
+      },
+      {
+        "label": "D",
+        "text": "10"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Add or subtract the numbers carefully. The correct answer is 6."
   },
   {
     "question_code": "Q1",
     "question_tag": "grade2.math",
     "question_type": "multiple_choice",
-    "prompt_text": "6 + 6 = ?",
+    "prompt_text": "6 + 6",
     "choices": [
       {
         "label": "A",
-        "text": "10"
+        "text": "12"
       },
       {
         "label": "B",
@@ -41,47 +67,21 @@
       },
       {
         "label": "C",
-        "text": "12"
-      },
-      {
-        "label": "D",
         "text": "13"
-      }
-    ],
-    "correct_answer": "C",
-    "explanation": "Add/subtract the numbers carefully. The correct answer is 12."
-  },
-  {
-    "question_code": "Q3",
-    "question_tag": "grade2.math",
-    "question_type": "multiple_choice",
-    "prompt_text": "14 + 5 = ?",
-    "choices": [
-      {
-        "label": "A",
-        "text": "18"
-      },
-      {
-        "label": "B",
-        "text": "19"
-      },
-      {
-        "label": "C",
-        "text": "20"
       },
       {
         "label": "D",
-        "text": "21"
+        "text": "14"
       }
     ],
-    "correct_answer": "B",
-    "explanation": "Add/subtract the numbers carefully. The correct answer is 19."
+    "correct_answer": "A",
+    "explanation": "Add or subtract the numbers carefully. The correct answer is 12."
   },
   {
-    "question_code": "Q4",
+    "question_code": "Q5",
     "question_tag": "grade2.math",
     "question_type": "multiple_choice",
-    "prompt_text": "7 - 3 = ?",
+    "prompt_text": "3 + 1",
     "choices": [
       {
         "label": "A",
@@ -101,32 +101,32 @@
       }
     ],
     "correct_answer": "A",
-    "explanation": "Add/subtract the numbers carefully. The correct answer is 4."
+    "explanation": "Add or subtract the numbers carefully. The correct answer is 4."
   },
   {
-    "question_code": "Q5",
+    "question_code": "Q4",
     "question_tag": "grade2.math",
     "question_type": "multiple_choice",
-    "prompt_text": "8 + 2 = ?",
+    "prompt_text": "4 + 2",
     "choices": [
       {
         "label": "A",
-        "text": "9"
+        "text": "5"
       },
       {
         "label": "B",
-        "text": "10"
+        "text": "6"
       },
       {
         "label": "C",
-        "text": "11"
+        "text": "7"
       },
       {
         "label": "D",
-        "text": "12"
+        "text": "8"
       }
     ],
     "correct_answer": "B",
-    "explanation": "Add/subtract the numbers carefully. The correct answer is 10."
+    "explanation": "Add or subtract the numbers carefully. The correct answer is 6."
   }
 ]

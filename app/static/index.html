@@ -15,12 +15,6 @@
         <span class="brand-spark">L</span>
         <span>Learning AI</span>
       </div>
-      <nav class="nav-links" aria-label="Sections">
-        <a href="#quizSetupForm">Setup</a>
-        <a href="#worksheetLibrary">Worksheets</a>
-        <a href="#startQuizBtn">Practice</a>
-      </nav>
-      <a class="nav-action" href="#quizSetupForm">Start now</a>
     </header>
 
     <section class="setup-hero">
@@ -75,18 +69,21 @@
         </div>
 
         <div class="field">
-          <label for="subject">Topic</label>
+          <label for="subject">Subject</label>
           <select id="subject">
             <option value="math">Math</option>
             <option value="sociales_colombia">Sociales Colombia</option>
             <option value="english">English</option>
-            <option value="science">Science</option>
           </select>
+        </div>
+
+        <div class="field full">
+          <label for="topic">Topic / skill</label>
+          <select id="topic"></select>
         </div>
 
         <div class="subject-strip full" aria-hidden="true">
           <span class="subject-chip chip-math">Math</span>
-          <span class="subject-chip chip-science">Science</span>
           <span class="subject-chip chip-english">English</span>
           <span class="subject-chip chip-social">Sociales</span>
         </div>
@@ -216,6 +213,6 @@
     </div>
   </div>
 
-  <script src="/static/js/app.js?v=9"></script>
+  <script src="/static/js/app.js?v=10"></script>
 </body>
 </html>

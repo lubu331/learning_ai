@@ -12,7 +12,9 @@ from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 
+from app.curriculum import CURRICULUM_TOPICS, get_default_topic_id, get_topic
 from app.services.ai_service import (
+    OllamaServiceError,
     generate_questions_from_pdf_images,
     generate_questions_with_ollama,
     validate_questions_with_ollama,
@@ -66,6 +68,11 @@ def list_pdfs():
     return {"files": files}
 
 
+@app.get("/curriculum")
+def get_curriculum():
+    return {"subjects": CURRICULUM_TOPICS}
+
+
 def evaluate_math(expr: str):
     match = re.search(r"(\d+)\s*([+\-])\s*(\d+)", expr)
 
@@ -85,15 +92,28 @@ def evaluate_math(expr: str):
     return None
 
 
+def math_expression_from_question(question: dict) -> str:
+    for key in ("operation", "equation", "expression"):
+        value = str(question.get(key, "")).strip()
+        normalized = normalize_math_prompt(value)
+
+        if evaluate_math(normalized) is not None:
+            return normalized
+
+    return normalize_math_prompt(question.get("prompt_text", ""))
+
+
 def fix_math_answers(questions: list[dict]):
     for q in questions:
-        correct = evaluate_math(q.get("prompt_text", ""))
+        expression = math_expression_from_question(q)
+        correct = evaluate_math(expression)
 
         if correct is None:
             continue
 
+        q["operation"] = normalize_math_prompt(expression)
         q["explanation"] = (
-            f"Add or subtract the numbers carefully. "
+            f"Use the operation {q['operation']}. "
             f"The correct answer is {correct}."
         )
 
@@ -122,6 +142,103 @@ def fix_math_answers(questions: list[dict]):
     return questions
 
 
+def build_math_question(
+    *,
+    operation: str,
+    index: int,
+    grade_level: str,
+    topic: str,
+    question_type: str,
+) -> dict:
+    correct = evaluate_math(operation)
+
+    if correct is None:
+        raise ValueError(f"Invalid math operation: {operation}")
+
+    prompt_text = f"What is {operation}?"
+
+    question = {
+        "question_code": f"Q{index}",
+        "question_tag": f"grade{grade_level}.math.{topic}",
+        "grade_level": grade_level,
+        "subject": "math",
+        "topic": topic,
+        "operation": operation,
+        "question_type": question_type,
+        "prompt_text": prompt_text,
+        "choices": [],
+        "correct_answer": str(correct),
+        "explanation": f"Use the operation {operation}. The correct answer is {correct}.",
+        "validation_status": "validated",
+        "source": "deterministic_math",
+    }
+
+    if question_type == "multiple_choice":
+        question["choices"] = build_math_choices(correct)
+
+        for choice in question["choices"]:
+            if str(choice.get("text", "")).strip() == str(correct):
+                question["correct_answer"] = choice.get("label")
+                break
+
+    return question
+
+
+def extract_math_operations(pdf_text: str) -> list[str]:
+    operations = []
+
+    for match in re.finditer(r"(?<!\d)(\d{1,3})\s*([+\-])\s*(\d{1,3})(?!\d)", pdf_text):
+        operation = normalize_math_prompt(" ".join(match.groups()))
+
+        if evaluate_math(operation) is None:
+            continue
+
+        operations.append(operation)
+
+    return operations
+
+
+def generate_math_questions_from_text(
+    *,
+    pdf_text: str,
+    grade_level: str,
+    topic: str,
+    question_type: str,
+    limit: int,
+) -> list[dict]:
+    operations = extract_math_operations(pdf_text)
+
+    if topic == "addition":
+        operations = [operation for operation in operations if "+" in operation]
+    elif topic == "subtraction":
+        operations = [operation for operation in operations if "-" in operation]
+
+    unique_operations = []
+    seen = set()
+
+    for operation in operations:
+        key = normalize_math_prompt(operation)
+
+        if key in seen:
+            continue
+
+        seen.add(key)
+        unique_operations.append(operation)
+
+    random.shuffle(unique_operations)
+
+    return [
+        build_math_question(
+            operation=operation,
+            index=index,
+            grade_level=grade_level,
+            topic=topic,
+            question_type=question_type,
+        )
+        for index, operation in enumerate(unique_operations[:limit], start=1)
+    ]
+
+
 def build_math_choices(correct: int):
     wrong_values = set()
 
@@ -144,23 +261,70 @@ def build_math_choices(correct: int):
     return choices
 
 
-def normalize_question(q: dict, index: int, grade_level: str, subject: str, question_type: str):
+def normalize_question(
+    q: dict,
+    index: int,
+    grade_level: str,
+    subject: str,
+    topic: str,
+    question_type: str,
+):
     q.setdefault("question_code", f"Q{index}")
-    q.setdefault("question_tag", f"grade{grade_level}.{subject}")
+    q.setdefault("question_tag", f"grade{grade_level}.{subject}.{topic}")
+    q.setdefault("grade_level", grade_level)
+    q.setdefault("subject", subject)
+    q.setdefault("topic", topic)
     q.setdefault("question_type", question_type)
     q.setdefault("prompt_text", "")
     q.setdefault("choices", [])
     q.setdefault("correct_answer", "")
     q.setdefault("explanation", "Good effort. Review the correct answer.")
+    q.setdefault("validation_status", "validated")
 
     return q
 
 def normalize_math_prompt(prompt: str) -> str:
-    match = re.search(r"(\d+)\s*([+\-])\s*(\d+)", prompt)
+    patterns = [
+        r"(\d+)\s*([+\-])\s*(\d+)",
+        r"sum\s+of\s+(\d+)\s+and\s+(\d+)",
+        r"add\s+(\d+)\s+and\s+(\d+)",
+        r"(\d+)\s+plus\s+(\d+)",
+        r"difference\s+between\s+(\d+)\s+and\s+(\d+)",
+        r"subtract\s+(\d+)\s+from\s+(\d+)",
+        r"(\d+)\s+minus\s+(\d+)",
+    ]
 
-    if match:
-        a, op, b = match.groups()
-        return f"{a} {op} {b}"
+    for index, pattern in enumerate(patterns):
+        match = re.search(pattern, prompt, flags=re.IGNORECASE)
+
+        if not match:
+            continue
+
+        groups = match.groups()
+
+        if index == 0:
+            a, op, b = groups
+        elif index in {1, 2, 3}:
+            a, b = groups
+            op = "+"
+        elif index == 4:
+            a, b = groups
+            op = "-"
+        elif index == 5:
+            b, a = groups
+            op = "-"
+        else:
+            a, b = groups
+            op = "-"
+
+        a_int = int(a)
+        b_int = int(b)
+
+        if op == "+":
+            left, right = sorted([a_int, b_int])
+            return f"{left} + {right}"
+
+        return f"{a_int} - {b_int}"
 
     prompt = prompt.replace("__________", "")
     prompt = prompt.replace("____", "")
@@ -199,11 +363,12 @@ def generate_quiz_in_batches(
     images: Optional[list[str]],
     grade_level: str,
     subject: str,
+    topic: str,
     question_type: str,
     limit: int,
 ):
     all_questions = []
-    batch_size = 5
+    batch_size = 3
     batch_number = 0
 
     while len(all_questions) < limit:
@@ -219,6 +384,7 @@ def generate_quiz_in_batches(
                 pdf_text=pdf_text,
                 grade_level=grade_level,
                 subject=subject,
+                topic=topic,
                 question_type=question_type,
                 limit=current_batch_size,
             )
@@ -227,6 +393,7 @@ def generate_quiz_in_batches(
                 images_base64=images or [],
                 grade_level=grade_level,
                 subject=subject,
+                topic=topic,
                 question_type=question_type,
                 limit=current_batch_size,
             )
@@ -246,11 +413,18 @@ def generate_quiz_in_batches(
 async def create_quiz(
     grade_level: str = Form(...),
     subject: str = Form(...),
+    topic: Optional[str] = Form(None),
     question_type: str = Form(...),
     limit: int = Form(5),
     existing_pdf: Optional[str] = Form(None),
     file: Optional[UploadFile] = File(None),
 ):
+    topic = topic or get_default_topic_id(subject)
+    topic_details = get_topic(subject, topic)
+
+    if topic_details is None and topic != "general":
+        raise HTTPException(status_code=400, detail="Selected topic is not available for this subject.")
+
     pdf_path = None
 
     if file and file.filename:
@@ -283,6 +457,29 @@ async def create_quiz(
     if not pdf_text.strip():
         images = pdf_to_images_base64(pdf_path, max_pages=1)
 
+    if subject == "math" and pdf_text.strip():
+        questions = generate_math_questions_from_text(
+            pdf_text=pdf_text,
+            grade_level=grade_level,
+            topic=topic,
+            question_type=question_type,
+            limit=limit,
+        )
+
+        if questions:
+            output_file = GENERATED_DIR / f"{pdf_path.stem}_quiz.json"
+            output_file.write_text(
+                json.dumps(questions, indent=2, ensure_ascii=False),
+                encoding="utf-8",
+            )
+
+            return {
+                "source_pdf": pdf_path.name,
+                "topic": topic,
+                "generation_mode": "deterministic_math",
+                "questions": questions,
+            }
+
     # 1. Generate initial questions
     try:
         questions = generate_quiz_in_batches(
@@ -290,11 +487,14 @@ async def create_quiz(
             images=images,
             grade_level=grade_level,
             subject=subject,
+            topic=topic,
             question_type=question_type,
             limit=limit,
         )
     except ValueError as e:
         raise HTTPException(status_code=422, detail=str(e))
+    except OllamaServiceError as e:
+        raise HTTPException(status_code=503, detail=str(e))
 
 
     if not questions:
@@ -309,7 +509,8 @@ async def create_quiz(
         questions = validate_questions_with_ollama(
             questions=questions,
             pdf_text=pdf_text,
-            subject=subject
+            subject=subject,
+            topic=topic,
         )
     except Exception as e:
         print(f"Warning: Validation step failed ({e}), proceeding with generated questions.")
@@ -326,6 +527,7 @@ async def create_quiz(
                 index=index,
                 grade_level=grade_level,
                 subject=subject,
+                topic=topic,
                 question_type=question_type,
             )
         )
@@ -345,6 +547,7 @@ async def create_quiz(
 
     return {
         "source_pdf": pdf_path.name,
+        "topic": topic,
         "questions": questions,
     }
 

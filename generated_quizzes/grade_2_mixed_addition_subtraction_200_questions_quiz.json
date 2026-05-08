@@ -1,0 +1,1602 @@
+[
+  {
+    "question_code": "Q1",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "42 + 45",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 42 + 45?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "91"
+      },
+      {
+        "label": "B",
+        "text": "82"
+      },
+      {
+        "label": "C",
+        "text": "87"
+      },
+      {
+        "label": "D",
+        "text": "92"
+      }
+    ],
+    "correct_answer": "C",
+    "explanation": "Use the operation 42 + 45. The correct answer is 87.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q2",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "39 + 387",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 39 + 387?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "426"
+      },
+      {
+        "label": "B",
+        "text": "427"
+      },
+      {
+        "label": "C",
+        "text": "431"
+      },
+      {
+        "label": "D",
+        "text": "421"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 39 + 387. The correct answer is 426.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q3",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "3 + 292",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 3 + 292?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "295"
+      },
+      {
+        "label": "B",
+        "text": "299"
+      },
+      {
+        "label": "C",
+        "text": "291"
+      },
+      {
+        "label": "D",
+        "text": "297"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 3 + 292. The correct answer is 295.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q4",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "1 + 22",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 1 + 22?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "23"
+      },
+      {
+        "label": "B",
+        "text": "25"
+      },
+      {
+        "label": "C",
+        "text": "22"
+      },
+      {
+        "label": "D",
+        "text": "27"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 1 + 22. The correct answer is 23.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q5",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "5 + 10",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 5 + 10?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "18"
+      },
+      {
+        "label": "B",
+        "text": "17"
+      },
+      {
+        "label": "C",
+        "text": "15"
+      },
+      {
+        "label": "D",
+        "text": "19"
+      }
+    ],
+    "correct_answer": "C",
+    "explanation": "Use the operation 5 + 10. The correct answer is 15.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q6",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "2 + 77",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 2 + 77?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "83"
+      },
+      {
+        "label": "B",
+        "text": "79"
+      },
+      {
+        "label": "C",
+        "text": "74"
+      },
+      {
+        "label": "D",
+        "text": "78"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Use the operation 2 + 77. The correct answer is 79.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q7",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "4 + 91",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 4 + 91?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "90"
+      },
+      {
+        "label": "B",
+        "text": "95"
+      },
+      {
+        "label": "C",
+        "text": "93"
+      },
+      {
+        "label": "D",
+        "text": "94"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Use the operation 4 + 91. The correct answer is 95.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q8",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "2 + 3",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 2 + 3?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "5"
+      },
+      {
+        "label": "B",
+        "text": "2"
+      },
+      {
+        "label": "C",
+        "text": "1"
+      },
+      {
+        "label": "D",
+        "text": "10"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 2 + 3. The correct answer is 5.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q9",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "21 + 402",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 21 + 402?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "418"
+      },
+      {
+        "label": "B",
+        "text": "426"
+      },
+      {
+        "label": "C",
+        "text": "427"
+      },
+      {
+        "label": "D",
+        "text": "423"
+      }
+    ],
+    "correct_answer": "D",
+    "explanation": "Use the operation 21 + 402. The correct answer is 423.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q10",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "2 + 314",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 2 + 314?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "316"
+      },
+      {
+        "label": "B",
+        "text": "314"
+      },
+      {
+        "label": "C",
+        "text": "312"
+      },
+      {
+        "label": "D",
+        "text": "321"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 2 + 314. The correct answer is 316.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q11",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "90 + 559",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 90 + 559?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "649"
+      },
+      {
+        "label": "B",
+        "text": "648"
+      },
+      {
+        "label": "C",
+        "text": "650"
+      },
+      {
+        "label": "D",
+        "text": "653"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 90 + 559. The correct answer is 649.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q12",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "91 + 105",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 91 + 105?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "198"
+      },
+      {
+        "label": "B",
+        "text": "191"
+      },
+      {
+        "label": "C",
+        "text": "196"
+      },
+      {
+        "label": "D",
+        "text": "197"
+      }
+    ],
+    "correct_answer": "C",
+    "explanation": "Use the operation 91 + 105. The correct answer is 196.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q13",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "44 + 60",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 44 + 60?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "104"
+      },
+      {
+        "label": "B",
+        "text": "101"
+      },
+      {
+        "label": "C",
+        "text": "102"
+      },
+      {
+        "label": "D",
+        "text": "109"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 44 + 60. The correct answer is 104.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q14",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "376 + 838",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 376 + 838?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "1215"
+      },
+      {
+        "label": "B",
+        "text": "1214"
+      },
+      {
+        "label": "C",
+        "text": "1217"
+      },
+      {
+        "label": "D",
+        "text": "1210"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Use the operation 376 + 838. The correct answer is 1214.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q15",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "8 + 26",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 8 + 26?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "34"
+      },
+      {
+        "label": "B",
+        "text": "39"
+      },
+      {
+        "label": "C",
+        "text": "35"
+      },
+      {
+        "label": "D",
+        "text": "38"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 8 + 26. The correct answer is 34.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q16",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "4 + 393",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 4 + 393?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "392"
+      },
+      {
+        "label": "B",
+        "text": "393"
+      },
+      {
+        "label": "C",
+        "text": "397"
+      },
+      {
+        "label": "D",
+        "text": "400"
+      }
+    ],
+    "correct_answer": "C",
+    "explanation": "Use the operation 4 + 393. The correct answer is 397.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q17",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "81 + 582",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 81 + 582?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "667"
+      },
+      {
+        "label": "B",
+        "text": "663"
+      },
+      {
+        "label": "C",
+        "text": "665"
+      },
+      {
+        "label": "D",
+        "text": "659"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Use the operation 81 + 582. The correct answer is 663.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q18",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "62 + 596",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 62 + 596?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "658"
+      },
+      {
+        "label": "B",
+        "text": "656"
+      },
+      {
+        "label": "C",
+        "text": "661"
+      },
+      {
+        "label": "D",
+        "text": "662"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 62 + 596. The correct answer is 658.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q19",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "3 + 40",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 3 + 40?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "38"
+      },
+      {
+        "label": "B",
+        "text": "44"
+      },
+      {
+        "label": "C",
+        "text": "48"
+      },
+      {
+        "label": "D",
+        "text": "43"
+      }
+    ],
+    "correct_answer": "D",
+    "explanation": "Use the operation 3 + 40. The correct answer is 43.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q20",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "37 + 97",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 37 + 97?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "130"
+      },
+      {
+        "label": "B",
+        "text": "132"
+      },
+      {
+        "label": "C",
+        "text": "137"
+      },
+      {
+        "label": "D",
+        "text": "134"
+      }
+    ],
+    "correct_answer": "D",
+    "explanation": "Use the operation 37 + 97. The correct answer is 134.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q21",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "545 + 952",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 545 + 952?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "1501"
+      },
+      {
+        "label": "B",
+        "text": "1496"
+      },
+      {
+        "label": "C",
+        "text": "1497"
+      },
+      {
+        "label": "D",
+        "text": "1494"
+      }
+    ],
+    "correct_answer": "C",
+    "explanation": "Use the operation 545 + 952. The correct answer is 1497.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q22",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "411 + 980",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 411 + 980?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "1390"
+      },
+      {
+        "label": "B",
+        "text": "1392"
+      },
+      {
+        "label": "C",
+        "text": "1389"
+      },
+      {
+        "label": "D",
+        "text": "1391"
+      }
+    ],
+    "correct_answer": "D",
+    "explanation": "Use the operation 411 + 980. The correct answer is 1391.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q23",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "6 + 16",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 6 + 16?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "17"
+      },
+      {
+        "label": "B",
+        "text": "25"
+      },
+      {
+        "label": "C",
+        "text": "22"
+      },
+      {
+        "label": "D",
+        "text": "19"
+      }
+    ],
+    "correct_answer": "C",
+    "explanation": "Use the operation 6 + 16. The correct answer is 22.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q24",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "86 + 971",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 86 + 971?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "1059"
+      },
+      {
+        "label": "B",
+        "text": "1057"
+      },
+      {
+        "label": "C",
+        "text": "1062"
+      },
+      {
+        "label": "D",
+        "text": "1058"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Use the operation 86 + 971. The correct answer is 1057.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q25",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "72 + 743",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 72 + 743?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "819"
+      },
+      {
+        "label": "B",
+        "text": "815"
+      },
+      {
+        "label": "C",
+        "text": "811"
+      },
+      {
+        "label": "D",
+        "text": "820"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Use the operation 72 + 743. The correct answer is 815.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q26",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "108 + 869",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 108 + 869?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "972"
+      },
+      {
+        "label": "B",
+        "text": "974"
+      },
+      {
+        "label": "C",
+        "text": "980"
+      },
+      {
+        "label": "D",
+        "text": "977"
+      }
+    ],
+    "correct_answer": "D",
+    "explanation": "Use the operation 108 + 869. The correct answer is 977.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q27",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "62 + 306",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 62 + 306?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "366"
+      },
+      {
+        "label": "B",
+        "text": "367"
+      },
+      {
+        "label": "C",
+        "text": "368"
+      },
+      {
+        "label": "D",
+        "text": "370"
+      }
+    ],
+    "correct_answer": "C",
+    "explanation": "Use the operation 62 + 306. The correct answer is 368.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q28",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "32 + 944",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 32 + 944?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "976"
+      },
+      {
+        "label": "B",
+        "text": "973"
+      },
+      {
+        "label": "C",
+        "text": "979"
+      },
+      {
+        "label": "D",
+        "text": "981"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 32 + 944. The correct answer is 976.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q29",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "160 + 980",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 160 + 980?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "1139"
+      },
+      {
+        "label": "B",
+        "text": "1140"
+      },
+      {
+        "label": "C",
+        "text": "1138"
+      },
+      {
+        "label": "D",
+        "text": "1141"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Use the operation 160 + 980. The correct answer is 1140.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q30",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "232 + 359",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 232 + 359?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "595"
+      },
+      {
+        "label": "B",
+        "text": "586"
+      },
+      {
+        "label": "C",
+        "text": "590"
+      },
+      {
+        "label": "D",
+        "text": "591"
+      }
+    ],
+    "correct_answer": "D",
+    "explanation": "Use the operation 232 + 359. The correct answer is 591.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q31",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "284 + 598",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 284 + 598?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "877"
+      },
+      {
+        "label": "B",
+        "text": "882"
+      },
+      {
+        "label": "C",
+        "text": "879"
+      },
+      {
+        "label": "D",
+        "text": "880"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Use the operation 284 + 598. The correct answer is 882.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q32",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "582 + 649",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 582 + 649?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "1233"
+      },
+      {
+        "label": "B",
+        "text": "1227"
+      },
+      {
+        "label": "C",
+        "text": "1228"
+      },
+      {
+        "label": "D",
+        "text": "1231"
+      }
+    ],
+    "correct_answer": "D",
+    "explanation": "Use the operation 582 + 649. The correct answer is 1231.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q33",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "8 + 62",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 8 + 62?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "70"
+      },
+      {
+        "label": "B",
+        "text": "65"
+      },
+      {
+        "label": "C",
+        "text": "73"
+      },
+      {
+        "label": "D",
+        "text": "66"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 8 + 62. The correct answer is 70.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q34",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "29 + 459",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 29 + 459?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "490"
+      },
+      {
+        "label": "B",
+        "text": "488"
+      },
+      {
+        "label": "C",
+        "text": "485"
+      },
+      {
+        "label": "D",
+        "text": "493"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Use the operation 29 + 459. The correct answer is 488.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q35",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "20 + 517",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 20 + 517?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "537"
+      },
+      {
+        "label": "B",
+        "text": "539"
+      },
+      {
+        "label": "C",
+        "text": "532"
+      },
+      {
+        "label": "D",
+        "text": "542"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 20 + 517. The correct answer is 537.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q36",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "8 + 622",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 8 + 622?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "630"
+      },
+      {
+        "label": "B",
+        "text": "631"
+      },
+      {
+        "label": "C",
+        "text": "629"
+      },
+      {
+        "label": "D",
+        "text": "633"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 8 + 622. The correct answer is 630.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q37",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "15 + 219",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 15 + 219?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "239"
+      },
+      {
+        "label": "B",
+        "text": "230"
+      },
+      {
+        "label": "C",
+        "text": "236"
+      },
+      {
+        "label": "D",
+        "text": "234"
+      }
+    ],
+    "correct_answer": "D",
+    "explanation": "Use the operation 15 + 219. The correct answer is 234.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q38",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "37 + 717",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 37 + 717?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "757"
+      },
+      {
+        "label": "B",
+        "text": "749"
+      },
+      {
+        "label": "C",
+        "text": "758"
+      },
+      {
+        "label": "D",
+        "text": "754"
+      }
+    ],
+    "correct_answer": "D",
+    "explanation": "Use the operation 37 + 717. The correct answer is 754.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q39",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "5 + 80",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 5 + 80?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "87"
+      },
+      {
+        "label": "B",
+        "text": "82"
+      },
+      {
+        "label": "C",
+        "text": "85"
+      },
+      {
+        "label": "D",
+        "text": "83"
+      }
+    ],
+    "correct_answer": "C",
+    "explanation": "Use the operation 5 + 80. The correct answer is 85.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q40",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "48 + 95",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 48 + 95?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "145"
+      },
+      {
+        "label": "B",
+        "text": "138"
+      },
+      {
+        "label": "C",
+        "text": "143"
+      },
+      {
+        "label": "D",
+        "text": "146"
+      }
+    ],
+    "correct_answer": "C",
+    "explanation": "Use the operation 48 + 95. The correct answer is 143.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q41",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "6 + 885",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 6 + 885?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "886"
+      },
+      {
+        "label": "B",
+        "text": "896"
+      },
+      {
+        "label": "C",
+        "text": "891"
+      },
+      {
+        "label": "D",
+        "text": "889"
+      }
+    ],
+    "correct_answer": "C",
+    "explanation": "Use the operation 6 + 885. The correct answer is 891.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q42",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "4 + 28",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 4 + 28?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "30"
+      },
+      {
+        "label": "B",
+        "text": "32"
+      },
+      {
+        "label": "C",
+        "text": "27"
+      },
+      {
+        "label": "D",
+        "text": "36"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Use the operation 4 + 28. The correct answer is 32.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q43",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "4 + 90",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 4 + 90?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "94"
+      },
+      {
+        "label": "B",
+        "text": "90"
+      },
+      {
+        "label": "C",
+        "text": "92"
+      },
+      {
+        "label": "D",
+        "text": "96"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 4 + 90. The correct answer is 94.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q44",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "8 + 52",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 8 + 52?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "64"
+      },
+      {
+        "label": "B",
+        "text": "60"
+      },
+      {
+        "label": "C",
+        "text": "55"
+      },
+      {
+        "label": "D",
+        "text": "63"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Use the operation 8 + 52. The correct answer is 60.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q45",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "4 + 4",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 4 + 4?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "9"
+      },
+      {
+        "label": "B",
+        "text": "11"
+      },
+      {
+        "label": "C",
+        "text": "7"
+      },
+      {
+        "label": "D",
+        "text": "8"
+      }
+    ],
+    "correct_answer": "D",
+    "explanation": "Use the operation 4 + 4. The correct answer is 8.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q46",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "1 + 307",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 1 + 307?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "313"
+      },
+      {
+        "label": "B",
+        "text": "308"
+      },
+      {
+        "label": "C",
+        "text": "304"
+      },
+      {
+        "label": "D",
+        "text": "307"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Use the operation 1 + 307. The correct answer is 308.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q47",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "6 + 17",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 6 + 17?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "21"
+      },
+      {
+        "label": "B",
+        "text": "23"
+      },
+      {
+        "label": "C",
+        "text": "18"
+      },
+      {
+        "label": "D",
+        "text": "22"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Use the operation 6 + 17. The correct answer is 23.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q48",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "4 + 30",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 4 + 30?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "34"
+      },
+      {
+        "label": "B",
+        "text": "35"
+      },
+      {
+        "label": "C",
+        "text": "31"
+      },
+      {
+        "label": "D",
+        "text": "32"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 4 + 30. The correct answer is 34.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q49",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "4 + 16",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 4 + 16?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "23"
+      },
+      {
+        "label": "B",
+        "text": "20"
+      },
+      {
+        "label": "C",
+        "text": "16"
+      },
+      {
+        "label": "D",
+        "text": "25"
+      }
+    ],
+    "correct_answer": "B",
+    "explanation": "Use the operation 4 + 16. The correct answer is 20.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  },
+  {
+    "question_code": "Q50",
+    "question_tag": "grade2.math.addition",
+    "grade_level": "2",
+    "subject": "math",
+    "topic": "addition",
+    "operation": "41 + 198",
+    "question_type": "multiple_choice",
+    "prompt_text": "What is 41 + 198?",
+    "choices": [
+      {
+        "label": "A",
+        "text": "239"
+      },
+      {
+        "label": "B",
+        "text": "234"
+      },
+      {
+        "label": "C",
+        "text": "243"
+      },
+      {
+        "label": "D",
+        "text": "244"
+      }
+    ],
+    "correct_answer": "A",
+    "explanation": "Use the operation 41 + 198. The correct answer is 239.",
+    "validation_status": "validated",
+    "source": "deterministic_math"
+  }
+]

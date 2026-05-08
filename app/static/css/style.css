@@ -85,7 +85,7 @@ button {
   padding: 0 18px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 18px;
   position: relative;
   z-index: 2;
@@ -109,34 +109,6 @@ button {
   color: #fff;
   font-size: 1.25rem;
   box-shadow: 0 8px 16px rgba(255, 159, 28, 0.26);
-}
-
-.nav-links {
-  display: flex;
-  gap: 22px;
-  align-items: center;
-}
-
-.nav-links a {
-  color: #485264;
-  font-size: 0.76rem;
-  font-weight: 900;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-.nav-action {
-  min-height: 38px;
-  padding: 0 16px;
-  border-radius: 6px;
-  background: #ff7a1a;
-  color: #fff;
-  font-size: 0.74rem;
-  font-weight: 950;
-  display: inline-grid;
-  place-items: center;
-  text-decoration: none;
-  text-transform: uppercase;
 }
 
 .setup-hero {
@@ -792,10 +764,6 @@ textarea:focus {
 
   .site-nav {
     border-radius: 14px 14px 0 0;
-  }
-
-  .nav-links {
-    display: none;
   }
 
   .setup-hero {
